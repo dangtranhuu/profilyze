@@ -50,43 +50,10 @@ app.get('/', (req, res) => {
     connection: connectionStatus
   });
 });
-app.get('/my/ip', (req, res) => {
-  console.log(req.headers['x-forwarded-for']);
-  res.send(`User IP address: ${getClientIp(req)}`);
-});
-
-function getClientIp(req) {
-  let ipAddress = req.headers['x-forwarded-for'];
-  if (!ipAddress || ipAddress.toLowerCase() === 'unknown') {
-    ipAddress = req.headers['proxy-client-ip'];
-  }
-  if (!ipAddress || ipAddress.toLowerCase() === 'unknown') {
-    ipAddress = req.headers['wl-proxy-client-ip'];
-  }
-  if (!ipAddress || ipAddress.toLowerCase() === 'unknown') {
-    ipAddress = req.headers['http-client-ip'];
-  }
-  if (!ipAddress || ipAddress.toLowerCase() === 'unknown') {
-    ipAddress = req.headers['http-x-forwarded-for'];
-  }
-  if (!ipAddress || ipAddress.toLowerCase() === 'unknown') {
-    ipAddress = req.connection.remoteAddress;
-    if (ipAddress === '::1') {
-      // Get IPv4 address for localhost
-      ipAddress = '127.0.0.1';
-    }
-  }
-  return ipAddress;
-}
 
 
 
-// require("./app/routes/badword.route")(app);
-// require("./app/routes/cache.route")(app);
-// require("./app/routes/auth.route")(app);
-// require("./app/routes/db.route")(app);
-// require("./app/routes/contribute.route")(app);
-
+require("./app/routes/countview.route")(app);
 
 //Thay vì sử dụng app.listen, sử dụng server.listen để sử dụng cùng một cổng cho cả express app và Socket.IO:
 server.listen(PORT, () => {
