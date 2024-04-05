@@ -40,6 +40,9 @@ exports.countNoneIP = async (req, res) => {
     const req_url = req.query['url'];
     let result = await CountView.find({ url: req_url });
 
+    if (!isValidURL(req_url))
+      return res.json("URL not valid")
+
     if (result.length < 1) {
       const doc = new CountView({
         ip: ip || "0:0:0:0/0",  //GUEST
@@ -86,3 +89,8 @@ function getClientIp(req) {
   return ipAddress;
 }
 
+function isValidURL(url) {
+  // Regular expression to match URL pattern
+  const pattern = /^(ftp|http|https):\/\/[^ "]+$/;
+  return pattern.test(url);
+}
