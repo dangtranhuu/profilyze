@@ -10,7 +10,7 @@ module.exports = function (app) {
   });
 
   app.get('/count/ip', (req, res) => controller.count(req, res));
-  app.get('/count/none-ip', (req, res) => controller.count(req, res));
+  app.get('/count/none-ip', (req, res) => controller.countNoneIP(req, res));
 };
 
 
