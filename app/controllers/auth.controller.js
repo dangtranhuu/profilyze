@@ -66,11 +66,13 @@ exports.guest = async (req, res) => {
 
     console.log(`Current Streaks: ${currentStreakNumber}`);
 
-    // Xây dựng đường dẫn tương đối đến tệp hình ảnh
-    const imagePath = path.join(__dirname, '..', 'assets', 'images', '3d-fire.png');
+    // // Xây dựng đường dẫn tương đối đến tệp hình ảnh
+    // const imagePath = path.join(__dirname, '..', 'assets', 'images', '3d-fire.png');
 
-    // Đọc dữ liệu base64 của hình ảnh từ tệp
-    const imageData = fs.readFileSync(imagePath, 'base64');
+    // console.log(imagePath)
+    // // Đọc dữ liệu base64 của hình ảnh từ tệp
+    // const imageData = fs.readFileSync(imagePath, 'base64');
+    const imageData = "https://github.com/theanishtar/count-viewer/blob/main/app/assets/images/3d-fire.png?raw=true";
 
     const svgString = `
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="106" height="20" role="img"
