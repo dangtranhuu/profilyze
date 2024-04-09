@@ -8,6 +8,7 @@ const db = require("./app/models");
 const config = require('./app/config/index');
 var dotent = require('dotenv');
 var getIP = require('ipware')().get_ip;
+const axios = require('axios');
 
 const app = express();
 const server = http.createServer(app); // Tạo server từ express app
@@ -68,6 +69,7 @@ app.get('/guest', (req, res) => {
 
 
 require("./app/routes/countview.route")(app);
+require("./app/routes/auth.route")(app, axios);
 
 //Thay vì sử dụng app.listen, sử dụng server.listen để sử dụng cùng một cổng cho cả express app và Socket.IO:
 server.listen(PORT, () => {
