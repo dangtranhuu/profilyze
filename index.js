@@ -51,6 +51,20 @@ app.get('/', (req, res) => {
   });
 });
 
+app.get('/guest', (req, res) => {
+  const svgString = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100">
+            <circle cx="50" cy="50" r="40" stroke="black" stroke-width="2" fill="red" />
+        </svg>
+    `;
+
+  // Set Content-Type header to tell the browser that the response is an SVG
+  res.set('Content-Type', 'image/svg+xml');
+
+  // Send the SVG string as the response
+  res.send(svgString);
+})
+
 
 
 require("./app/routes/countview.route")(app);
