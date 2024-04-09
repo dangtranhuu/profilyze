@@ -10,4 +10,5 @@ module.exports = function (app, axios) {
   });
 
   app.get("/api/github/streak", controller.streak);  ///api/github/streak?user=theanishtar
+  app.get("/api/github/range", controller.range);  ///api/github/streak?user=theanishtar
 };
