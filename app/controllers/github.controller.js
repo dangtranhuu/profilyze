@@ -31,7 +31,6 @@ exports.range = async (req, res) => {
 
     const svgString = `
     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="105" height="20" role="img" aria-label="${currentStreakRange}"><script xmlns="" id="nimlmejbmnecnaghgmbahmbaddhjbecg"/><script xmlns=""/><script xmlns=""/><script xmlns=""/><title>Current Streak Range</title><linearGradient id="s" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="r"><rect width="105" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#r)"><rect width="0" height="20" fill="#8a2be2"/><rect x="0" width="105" height="20" fill="#8a2be2"/><rect width="105" height="20" fill="url(#s)"/></g><g fill="#fff" text-anchor="middle" font-family="Verdana,Geneva,DejaVu Sans,sans-serif" text-rendering="geometricPrecision" font-size="110"><text aria-hidden="true" x="525" y="150" fill="#010101" fill-opacity=".3" transform="scale(.1)" textLength="950">${currentStreakRange}</text><text x="525" y="140" transform="scale(.1)" fill="#fff" textLength="950">${currentStreakRange}</text></g><script xmlns=""/></svg>
-
     `;
 
     // Set Content-Type header to tell the browser that the response is an SVG
