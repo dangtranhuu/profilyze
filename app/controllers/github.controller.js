@@ -75,7 +75,9 @@ exports.streak = async (req, res) => {
     // console.log(imagePath)
     // // Đọc dữ liệu base64 của hình ảnh từ tệp
     // const imageData = fs.readFileSync(imagePath, 'base64');
-    const imageData = "https://github.com/theanishtar/count-viewer/blob/main/app/assets/images/3d-fire.png?raw=true";
+    // const imageData = "https://github.com/theanishtar/count-viewer/blob/main/app/assets/images/3d-fire.png?raw=true";
+
+    const imageData = "🔥";
 
     const svgString = `
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="106" height="20" role="img"
@@ -107,14 +109,14 @@ exports.streak = async (req, res) => {
           <path d="M84.5 6.5 l-3 3v1 l3 3" stroke="d5d5d5" fill="#fafafa" />
         </g>
         <!-- Thay thế dữ liệu base64 của icon GitHub bằng dữ liệu base64 của icon Streak -->
-        <image x="5" y="3" width="14" height="14" xlink:href="${imageData}" class="icon"/>
+        <!-- <image x="5" y="3" width="14" height="14" xlink:href="${imageData}" class="icon"/> -->
         <g aria-hidden="true" fill="#333" text-anchor="middle" font-family="Helvetica Neue,Helvetica,Arial,sans-serif"
           text-rendering="geometricPrecision" font-weight="700" font-size="110px" line-height="14px">
           <rect id="llink" stroke="#d5d5d5" fill="url(#a)" x=".5" y=".5" width="78" height="19" rx="2" /><text
             aria-hidden="true" x="475" y="150" fill="#fff" transform="scale(.1)" textLength="510">Streaks</text><text
             x="475" y="140" transform="scale(.1)" textLength="510">Streaks</text><text aria-hidden="true" x="945" y="150"
-            fill="#fff" transform="scale(.1)" textLength="130">${currentStreakNumber}</text><text id="rlink" x="945" y="140"
-            transform="scale(.1)" textLength="130">${currentStreakNumber}</text>
+            fill="#fff" transform="scale(.1)" textLength="130">🔥${currentStreakNumber}</text><text id="rlink" x="945" y="140"
+            transform="scale(.1)" textLength="130">🔥${currentStreakNumber}</text>
         </g>
       </svg>
     `;
