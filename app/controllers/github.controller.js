@@ -108,7 +108,7 @@ exports.streak = async (req, res) => {
           <path d="M84.5 6.5 l-3 3v1 l3 3" stroke="d5d5d5" fill="#fafafa" />
         </g>
         <!-- Thay thế dữ liệu base64 của icon GitHub bằng dữ liệu base64 của icon Streak -->
-        <image x="5" y="3" width="14" height="14" xlink:href="${imageData}" />
+        <image x="5" y="3" width="14" height="14" xlink:href="${imageData}" class="icon"/>
         <g aria-hidden="true" fill="#333" text-anchor="middle" font-family="Helvetica Neue,Helvetica,Arial,sans-serif"
           text-rendering="geometricPrecision" font-weight="700" font-size="110px" line-height="14px">
           <rect id="llink" stroke="#d5d5d5" fill="url(#a)" x=".5" y=".5" width="78" height="19" rx="2" /><text
