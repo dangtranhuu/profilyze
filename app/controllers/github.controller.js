@@ -6,6 +6,7 @@ const fs = require('fs');
 const path = require('path');
 
 
+
 exports.range = async (req, res) => {
   try {
     const user = req.query['user'];
@@ -77,7 +78,7 @@ exports.streak = async (req, res) => {
     // const imageData = fs.readFileSync(imagePath, 'base64');
     // const imageData = "https://github.com/theanishtar/count-viewer/blob/main/app/assets/images/3d-fire.png?raw=true";
 
-    const imageData = "🔥";
+    const imageData = "";
 
     const svgString = `
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="106" height="20" role="img"
@@ -109,16 +110,19 @@ exports.streak = async (req, res) => {
           <path d="M84.5 6.5 l-3 3v1 l3 3" stroke="d5d5d5" fill="#fafafa" />
         </g>
         <!-- Thay thế dữ liệu base64 của icon GitHub bằng dữ liệu base64 của icon Streak -->
-        <!-- <image x="5" y="3" width="14" height="14" xlink:href="${imageData}" class="icon"/> -->
+        <!-- <image x="5" y="3" width="14" height="14" xlink:href="${imageData}" class="icon"/> 🔥 --> 
         <g aria-hidden="true" fill="#333" text-anchor="middle" font-family="Helvetica Neue,Helvetica,Arial,sans-serif"
           text-rendering="geometricPrecision" font-weight="700" font-size="110px" line-height="14px">
+          <!-- Thay đổi giá trị của x và y để đặt icon vào vị trí mong muốn -->
+          <text x="10" y="15"  font-size="15px" line-height="14px">🔥</text>
           <rect id="llink" stroke="#d5d5d5" fill="url(#a)" x=".5" y=".5" width="78" height="19" rx="2" /><text
             aria-hidden="true" x="475" y="150" fill="#fff" transform="scale(.1)" textLength="510">Streaks</text><text
             x="475" y="140" transform="scale(.1)" textLength="510">Streaks</text><text aria-hidden="true" x="945" y="150"
-            fill="#fff" transform="scale(.1)" textLength="130">🔥${currentStreakNumber}</text><text id="rlink" x="945" y="140"
-            transform="scale(.1)" textLength="130">🔥${currentStreakNumber}</text>
+            fill="#fff" transform="scale(.1)" textLength="130">${currentStreakNumber}</text><text id="rlink" x="945" y="140"
+            transform="scale(.1)" textLength="130">${currentStreakNumber}</text>
         </g>
       </svg>
+
     `;
 
     // Set Content-Type header to tell the browser that the response is an SVG
