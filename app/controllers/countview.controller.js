@@ -17,19 +17,18 @@ exports.count = async (req, res) => {
         ip: ip || "0:0:0:0/0",  //GUEST
         view_count: 0,
         type: ["link"],
-        url: req_url
+        url: req_url,
+        access_ip: [ip]
       });
 
       const saveDoc = await doc.save();
 
       return res.json(saveDoc);
     }
-    if (result[0].ip === ip)
-      return res.json(result[0]);
 
-    result[0].view_count = result[0].view_count + 1;
+    result[0].access_ip.push(ip);
+
     const update = await CountView.updateOne({ url: req_url }, { $set: result[0] });
-
     return res.json(update);
   } catch (err) {
     return res.json(err);

@@ -16,6 +16,9 @@ const countViewSchema = new mongoose.Schema({
   },
   url: {
     type: String
+  },
+  access_ip: {
+    type: Array
   }
 });
 
