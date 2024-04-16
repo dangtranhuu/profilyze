@@ -1,6 +1,7 @@
 const config = require("../config/auth.config");
 var jwt = require("jsonwebtoken");
 const axios = require('axios');
+const { html } = require('html-template-tag');
 const cheerio = require('cheerio');
 const fs = require('fs');
 const path = require('path');
@@ -83,6 +84,46 @@ exports.dangth = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
+  }
+};
+
+exports.renderHTML = async (req, res) => {
+  try {
+    const treakStats = await axios.get(`https://streak-stats.demolab.com?user=theanishtar&theme=dark&disable_animations=false`);
+    const mostUsedLanguages = await axios.get(`https://github-readme-stats.vercel.app/api/top-langs/?username=theanishtar&theme=react&hide_border=true&bg_color=0d1117&title_color=F85D7F&icon_color=F8D866&card_width=500px&langs_count=8&hide=css,html&layout=compact&PAT_1&disable_animations=false`);
+    const gitHubStats = await axios.get(`https://github-readme-stats.vercel.app/api?username=theanishtar&theme=react&hide_border=true&bg_color=0d1117&title_color=F85D7F&icon_color=F8D866&card_width=500px&count_private=true&disable_animations=false&PAT_1`);
+    const contributionGraph = await axios.get(`https://github-readme-activity-graph.vercel.app/graph?username=theanishtar&bg_color=0d1117&color=9e4c98&line=2f81f7&point=403d3d&area=true&hide_border=true`);
+
+    const htmlContent = `
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>SVG Display</title>
+        <style>
+          .svg-container {
+            width: 400px;
+            margin-bottom: 20px;
+          }
+          .svg-container svg {
+            width: 100%;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="svg-container">${treakStats.data}</div>
+        <div class="svg-container">${mostUsedLanguages.data}</div>
+        <div class="svg-container">${gitHubStats.data}</div>
+        <div class="svg-container">${contributionGraph.data}</div>
+      </body>
+      </html>
+    `;
+
+    res.status(200).send(htmlContent);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal Server Error');
   }
 };
 
