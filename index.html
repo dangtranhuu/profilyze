@@ -4,21 +4,40 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>SVG Display</title>
+  <!-- <style>
+    .svg-container {
+      width: 400px;
+      /* Đặt kích thước cho mỗi SVG container */
+    }
+
+    .svg-container svg {
+      width: 100%;
+      /* Đảm bảo rằng SVG fill đầy đủ chiều rộng của container */
+    }
+  </style> -->
 </head>
 
 <body>
-  <svg width="300" height="100" xmlns="http://www.w3.org/2000/svg">
-    <!-- Chèn ảnh thứ nhất -->
-    <image href="link_to_image1.jpg" width="100" height="100" x="0" y="0" />
+  <div class="svg-container" id="treakStatsContainer"></div>
+  <div class="svg-container" id="mostUsedLanguagesContainer"></div>
+  <div class="svg-container" id="gitHubStatsContainer"></div>
+  <div class="svg-container" id="contributionGraphContainer"></div>
 
-    <!-- Chèn ảnh thứ hai -->
-    <image href="link_to_image2.jpg" width="100" height="100" x="100" y="0" />
-
-    <!-- Chèn ảnh thứ ba -->
-    <image href="link_to_image3.jpg" width="100" height="100" x="200" y="0" />
-  </svg>
-
+  <script>
+    // Lấy dữ liệu JSON từ máy chủ
+    const url = `http://localhost:5152/api/auth/dangth`;
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        // Hiển thị từng SVG trong các container có id tương ứng
+        document.getElementById('treakStatsContainer').innerHTML = data.treakStats;
+        document.getElementById('mostUsedLanguagesContainer').innerHTML = data.mostUsedLanguages;
+        document.getElementById('gitHubStatsContainer').innerHTML = data.gitHubStats;
+        document.getElementById('contributionGraphContainer').innerHTML = data.contributionGraph;
+      })
+      .catch(error => console.error('Error fetching data:', error));
+  </script>
 </body>
 
 </html>

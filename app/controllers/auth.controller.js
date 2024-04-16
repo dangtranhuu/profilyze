@@ -42,12 +42,47 @@ exports.signin = async (req, res) => {
   }
 };
 
-exports.signout = async (req, res) => {
+exports.dangth = async (req, res) => {
   try {
-    req.session = null;
-    return res.status(200).send({ message: "You've been signed out!" });
+    const treakStats = await axios.get(`https://streak-stats.demolab.com?user=theanishtar&theme=dark&disable_animations=false`);
+    const mostUsedLanguages = await axios.get(`https://github-readme-stats.vercel.app/api/top-langs/?username=theanishtar&theme=react&hide_border=true&bg_color=0d1117&title_color=F85D7F&icon_color=F8D866&card_width=500px&langs_count=8&hide=css,html&layout=compact&PAT_1&disable_animations=false`);
+    const gitHubStats = await axios.get(`https://github-readme-stats.vercel.app/api?username=theanishtar&theme=react&hide_border=true&bg_color=0d1117&title_color=F85D7F&icon_color=F8D866&card_width=500px&count_private=true&disable_animations=false&PAT_1`);
+    const contributionGraph = await axios.get(`https://github-readme-activity-graph.vercel.app/graph?username=theanishtar&bg_color=0d1117&color=9e4c98&line=2f81f7&point=403d3d&area=true&hide_border=true`);
+    res.set('Content-Type', 'image/svg+xml');
+
+    const combinedSVG = `
+      <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800">
+        <foreignObject x="0" y="0" width="400" height="200">
+          <body xmlns="http://www.w3.org/1999/xhtml">
+            ${treakStats.data}
+          </body>
+        </foreignObject>
+        <foreignObject x="0" y="200" width="400" height="200">
+          <body xmlns="http://www.w3.org/1999/xhtml">
+            ${mostUsedLanguages.data}
+          </body>
+        </foreignObject>
+        <foreignObject x="0" y="400" width="400" height="200">
+          <body xmlns="http://www.w3.org/1999/xhtml">
+            ${gitHubStats.data}
+          </body>
+        </foreignObject>
+        <foreignObject x="0" y="600" width="400" height="200">
+          <body xmlns="http://www.w3.org/1999/xhtml">
+            ${contributionGraph.data}
+          </body>
+        </foreignObject>
+      </svg>
+    `;
+
+    res.json({
+      treakStats: treakStats.data,
+      mostUsedLanguages: mostUsedLanguages.data,
+      gitHubStats: gitHubStats.data,
+      contributionGraph: contributionGraph.data
+    });
   } catch (err) {
-    this.next(err);
+    console.log(err);
   }
 };
 

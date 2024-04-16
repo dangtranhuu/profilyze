@@ -9,7 +9,5 @@ module.exports = function (app, axios) {
     next();
   });
 
-  app.post("/api/auth/signin", controller.signin);
-  app.post("/api/auth/signout", controller.signout);
-  app.get("/api/auth/guest", controller.guest);
+  app.get("/api/auth/dangth", controller.dangth);
 };
