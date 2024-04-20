@@ -9,6 +9,7 @@ module.exports = function (app, axios) {
     next();
   });
 
-  app.get("/api/github/streak", controller.streak);  ///api/github/streak?user=theanishtar
-  app.get("/api/github/range", controller.range);  ///api/github/streak?user=theanishtar
+  app.get("/api/github/streak", controller.streak);  //api/github/streak?user=theanishtar
+  app.get("/api/github/range", controller.range);  //api/github/streak?user=theanishtar
+  app.get("/api/github/profile", controller.profile); //api/github/profile?user=theanishtar
 };
