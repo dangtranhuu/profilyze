@@ -1,11 +1,7 @@
-<svg width="300" height="100" xmlns="http://www.w3.org/2000/svg">
-  
-  <img src="https://komarev.com/ghpvc/?username=theanishtar&label=Profile%20views&color=0e75b6&style=flat" alt="theanishtar"/> 
-  <a href="https://count-viewer.vercel.app/api/github/streak?user=theanishtar">
-    <image src="https://count-viewer.vercel.app/api/github/streak?user=theanishtar" alt="current streak number" class="streak-number">
-  </a>
-  <a href="https://count-viewer.vercel.app/api/github/range?user=theanishtar">
-    <img src="https://count-viewer.vercel.app/api/github/range?user=theanishtar" alt="current streak range">
-  </a>
+# Hi, I'm Dang Tran! <img src="https://github.com/dangtranhuu/images/blob/main/frog/gif/zQRCHEK.gif?raw=true"  width="80px" alt="totoro"/>
 
-</svg>
+<a hrref=""><img src="https://komarev.com/ghpvc/?username=theanishtar&label=Profile%20views&color=0e75b6&style=flat" alt="theanishtar" /></a> <!--![](https://count-viewer.vercel.app/api/github/streak?user=theanishtar)-->
+<a href="https://count-viewer.vercel.app/api/auth/profile"><img src="https://count-viewer.vercel.app/api/github/streak?user=theanishtar" alt="current streak number"></a>
+<a href="https://count-viewer.vercel.app/api/auth/profile" target="_blank"><img src="https://count-viewer.vercel.app/api/github/range?user=theanishtar" alt="current streak range"></a>
+
+<img align="center" alt="Profile Details" src="https://count-viewer.vercel.app/api/github/profile?user=theanishtar" />
