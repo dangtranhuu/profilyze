@@ -217,11 +217,7 @@ exports.profile = async (req, res) => {
       </image>
       <text style="fill: rgb(131, 235, 241); font-family: 'AR One Sans'; font-size: 28px; white-space: pre;" transform="matrix(0.337932, 0, 0, 0.337219, 167.196057, 14.812479)">${view_profile}</text>
       
-      ${template === 'frog' ? '': '<!--'}  
-      <image width="48.282" height="36.213" x="26.213" y="35.564" style="" xlink:href="${frog_gif()}">
-        <title>Frog</title>
-      </image> 
-      ${template === 'frog' ? '': '-->'}  
+      ${template === 'frog' ? '<image width="48.282" height="36.213" x="26.213" y="35.564" style="" xlink:href="${frog_gif()}"> <title>Frog</title> </image>': '-->'}  
       
     </svg>`;
 
