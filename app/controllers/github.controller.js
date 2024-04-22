@@ -161,11 +161,12 @@ exports.streak = async (req, res) => {
   }
 };
 
-exports.theanishtar = async (req, res) => {
+exports.profile = async (req, res) => {
   try {
     const ip = getClientIp(req);
     const user = req.query['user'] || 'theanishtar';
     const name = req.query['name'] || 'TRAN HUU DANG';
+    const template = req.query['template'] || `basic`;
     const response = await axios.get(`https://streak-stats.demolab.com?user=${user}`);
     let result = await Github.find({ username: user });
     let view_profile = 1;
@@ -215,9 +216,13 @@ exports.theanishtar = async (req, res) => {
         <title>Sharingan</title>
       </image>
       <text style="fill: rgb(131, 235, 241); font-family: 'AR One Sans'; font-size: 28px; white-space: pre;" transform="matrix(0.337932, 0, 0, 0.337219, 167.196057, 14.812479)">${view_profile}</text>
+      
+      ${template === 'frog' ? '': '<!--'}  
       <image width="48.282" height="36.213" x="26.213" y="35.564" style="" xlink:href="${frog_gif()}">
         <title>Frog</title>
-      </image>
+      </image> 
+      ${template === 'frog' ? '': '-->'}  
+      
     </svg>`;
 
     res.set('Content-Type', 'image/svg+xml');
