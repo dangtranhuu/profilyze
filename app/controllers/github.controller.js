@@ -184,8 +184,9 @@ exports.profile = async (req, res) => {
     } else if (!result[0].access_ip.includes(ip)) {
       result[0].access_ip.push(ip);
       const update = await Github.updateOne({ username: user }, { $set: result[0] });
-      view_profile = result[0].access_ip.length;
     }
+    view_profile = result[0].access_ip.length;
+
 
     htmlString = response.data;
     // Phân tích chuỗi HTML bằng cheerio
