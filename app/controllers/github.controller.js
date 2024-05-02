@@ -35,7 +35,7 @@ function getClientIp(req) {
 
 exports.range = async (req, res) => {
   try {
-    const user = req.query['user'];
+    const user = req.query['user'] || 'theanishtar';
     const response = await axios.get(`https://streak-stats.demolab.com?user=${user}`);
     htmlString = response.data;
     // Phân tích chuỗi HTML bằng cheerio
@@ -73,7 +73,7 @@ exports.range = async (req, res) => {
 
 exports.streak = async (req, res) => {
   try {
-    const user = req.query['user'];
+    const user = req.query['user'] || 'theanishtar';
     const response = await axios.get(`https://streak-stats.demolab.com?user=${user}`);
     htmlString = response.data;
     // Phân tích chuỗi HTML bằng cheerio
@@ -107,8 +107,8 @@ exports.streak = async (req, res) => {
 
     const svgString = `
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="106" height="20" role="img"
-        aria-label="Streaks: 41">
-        <title>Streaks: 41</title>
+        aria-label="${user} Streaks">
+        <title>${user} Streaks</title>
         <style>
           a:hover #llink {
             fill: url(#b);
@@ -137,14 +137,13 @@ exports.streak = async (req, res) => {
         <!-- Thay thế dữ liệu base64 của icon GitHub bằng dữ liệu base64 của icon Streak -->
         <!-- <image x="5" y="3" width="14" height="14" xlink:href="${imageData}" class="icon"/> 🔥 --> 
         <g aria-hidden="true" fill="#333" text-anchor="middle" font-family="Helvetica Neue,Helvetica,Arial,sans-serif"
-          text-rendering="geometricPrecision" font-weight="700" font-size="110px" line-height="14px">
+          text-rendering="geometricPrecision" font-weight="700" font-size="110px" line-height="14px" xlink:href="https://streak-stats.demolab.com/?user=${user}">
           <!-- Thay đổi giá trị của x và y để đặt icon vào vị trí mong muốn -->
           <text x="10" y="15"  font-size="15px" line-height="14px">🔥</text>
           <rect id="llink" stroke="#d5d5d5" fill="url(#a)" x=".5" y=".5" width="78" height="19" rx="2" /><text
             aria-hidden="true" x="475" y="150" fill="#fff" transform="scale(.1)" textLength="510">Streaks</text><text
-            x="475" y="140" transform="scale(.1)" textLength="510">Streaks</text><text aria-hidden="true" x="945" y="150"
-            fill="#fff" transform="scale(.1)" textLength="130">${currentStreakNumber}</text><text id="rlink" x="945" y="140"
-            transform="scale(.1)" textLength="130">${currentStreakNumber}</text>
+            x="475" y="140" transform="scale(.1)" textLength="510">Streaks</text><text id="rlink" aria-hidden="true" x="945" y="150"
+            fill="#000000" transform="scale(.1)" textLength="180">${currentStreakNumber}</text>
         </g>
       </svg>
 
