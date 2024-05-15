@@ -10,5 +10,5 @@ module.exports = function (app, axios) {
   });
 
   // app.get("/api/auth/dangth", controller.dangth);
-  app.get("/api/auth/dangth", controller.renderHTML);
+  app.get("/api/auth/profile", controller.renderHTML);
 };

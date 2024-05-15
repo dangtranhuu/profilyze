@@ -88,10 +88,11 @@ exports.dangth = async (req, res) => {
 
 exports.renderHTML = async (req, res) => {
   try {
-    const treakStats = await axios.get(`https://streak-stats.demolab.com?user=theanishtar&theme=dark&disable_animations=false`);
-    const mostUsedLanguages = await axios.get(`https://github-readme-stats.vercel.app/api/top-langs/?username=theanishtar&theme=react&hide_border=true&bg_color=0d1117&title_color=F85D7F&icon_color=F8D866&card_width=500px&langs_count=8&hide=css,html&layout=compact&PAT_1&disable_animations=false`);
-    const gitHubStats = await axios.get(`https://github-readme-stats.vercel.app/api?username=theanishtar&theme=react&hide_border=true&bg_color=0d1117&title_color=F85D7F&icon_color=F8D866&card_width=500px&count_private=true&disable_animations=false&PAT_1`);
-    const contributionGraph = await axios.get(`https://github-readme-activity-graph.vercel.app/graph?username=theanishtar&bg_color=0d1117&color=9e4c98&line=2f81f7&point=403d3d&area=true&hide_border=true`);
+    const user = req.query['user'] || `theanishtar`;
+    const treakStats = await axios.get(`https://streak-stats.demolab.com?user=${user}&theme=dark&disable_animations=false`);
+    const mostUsedLanguages = await axios.get(`https://github-readme-stats.vercel.app/api/top-langs/?username=${user}&theme=react&hide_border=true&bg_color=0d1117&title_color=F85D7F&icon_color=F8D866&card_width=500px&langs_count=8&hide=css,html&layout=compact&PAT_1&disable_animations=false`);
+    const gitHubStats = await axios.get(`https://github-readme-stats.vercel.app/api?username=${user}&theme=react&hide_border=true&bg_color=0d1117&title_color=F85D7F&icon_color=F8D866&card_width=500px&count_private=true&disable_animations=false&PAT_1`);
+    const contributionGraph = await axios.get(`https://github-readme-activity-graph.vercel.app/graph?username=${user}&bg_color=0d1117&color=9e4c98&line=2f81f7&point=403d3d&area=true&hide_border=true`);
 
     const htmlContent = `
       <!DOCTYPE html>
