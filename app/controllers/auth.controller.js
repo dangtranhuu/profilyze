@@ -50,30 +50,30 @@ exports.dangth = async (req, res) => {
     const contributionGraph = await axios.get(`https://github-readme-activity-graph.vercel.app/graph?username=theanishtar&bg_color=0d1117&color=9e4c98&line=2f81f7&point=403d3d&area=true&hide_border=true`);
     res.set('Content-Type', 'image/svg+xml');
 
-    const combinedSVG = `
-      <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800">
-        <foreignObject x="0" y="0" width="400" height="200">
-          <body xmlns="http://www.w3.org/1999/xhtml">
-            ${treakStats.data}
-          </body>
-        </foreignObject>
-        <foreignObject x="0" y="200" width="400" height="200">
-          <body xmlns="http://www.w3.org/1999/xhtml">
-            ${mostUsedLanguages.data}
-          </body>
-        </foreignObject>
-        <foreignObject x="0" y="400" width="400" height="200">
-          <body xmlns="http://www.w3.org/1999/xhtml">
-            ${gitHubStats.data}
-          </body>
-        </foreignObject>
-        <foreignObject x="0" y="600" width="400" height="200">
-          <body xmlns="http://www.w3.org/1999/xhtml">
-            ${contributionGraph.data}
-          </body>
-        </foreignObject>
-      </svg>
-    `;
+    // const combinedSVG = `
+    //   <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800">
+    //     <foreignObject x="0" y="0" width="400" height="200">
+    //       <body xmlns="http://www.w3.org/1999/xhtml">
+    //         ${treakStats.data}
+    //       </body>
+    //     </foreignObject>
+    //     <foreignObject x="0" y="200" width="400" height="200">
+    //       <body xmlns="http://www.w3.org/1999/xhtml">
+    //         ${mostUsedLanguages.data}
+    //       </body>
+    //     </foreignObject>
+    //     <foreignObject x="0" y="400" width="400" height="200">
+    //       <body xmlns="http://www.w3.org/1999/xhtml">
+    //         ${gitHubStats.data}
+    //       </body>
+    //     </foreignObject>
+    //     <foreignObject x="0" y="600" width="400" height="200">
+    //       <body xmlns="http://www.w3.org/1999/xhtml">
+    //         ${contributionGraph.data}
+    //       </body>
+    //     </foreignObject>
+    //   </svg>
+    // `;
 
     res.json({
       treakStats: treakStats.data,
