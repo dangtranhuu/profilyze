@@ -9,6 +9,6 @@ module.exports = function (app, axios) {
     next();
   });
 
-  //app.get("/api/auth/dangth", controller.dangth);
+  app.get("/api/auth/dangth", controller.dangth);
   //app.get("/api/auth/profile", controller.renderHTML);
 };
