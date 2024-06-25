@@ -236,7 +236,7 @@ exports.contributes = async (req, res) => {
 
     const user = req.query['user'] || 'theanishtar';
     const yearView = req.query['year'];
-    const user_url = `https://api.github.com/users/theanishtar`;
+    const user_url = `https://api.github.com/users/${user}`;
     const usersProfile = await axios.get(user_url);
     userCreateAtYear = new Date(usersProfile.data.created_at).getFullYear();
     const currentYear = new Date().getFullYear();
@@ -249,7 +249,7 @@ exports.contributes = async (req, res) => {
     let streakArr = [];
     let ctbt = 0;
     // const url = `https://github.com/users/${user}/contributions`;
-    const url = `https://github.com/users/theanishtar/contributions?tab=overview&from=${userCreateAtYear}-01-01&to=${userCreateAtYear}-12-31`;
+    const url = `https://github.com/users/${user}/contributions?tab=overview&from=${userCreateAtYear}-01-01&to=${userCreateAtYear}-12-31`;
     const response = await axios.get(url);
     const html = response.data;
 
