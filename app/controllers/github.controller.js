@@ -167,10 +167,10 @@ exports.profile = async (req, res) => {
     const name = req.query['name'] || 'TRAN HUU DANG';
     const template = req.query['template'] || `basic`;
     const response = await axios.get(`https://streak-stats.demolab.com?user=${user}`);
-    let result = await Github.find({ username: user });
+    let contributions = await Github.find({ username: user });
     let view_profile = 1;
 
-    if (result.length < 1) {
+    if (contributions.length < 1) {
       const doc = new Github({
         ip: ip || "0:0:0:0/0",  //GUEST
         username: user,
@@ -180,11 +180,11 @@ exports.profile = async (req, res) => {
       const saveDoc = await doc.save();
 
       return res.json(saveDoc);
-    } else if (!result[0].access_ip.includes(ip)) {
-      result[0].access_ip.push(ip);
-      const update = await Github.updateOne({ username: user }, { $set: result[0] });
+    } else if (!contributions[0].access_ip.includes(ip)) {
+      contributions[0].access_ip.push(ip);
+      const update = await Github.updateOne({ username: user }, { $set: contributions[0] });
     }
-    view_profile = result[0].access_ip.length;
+    view_profile = contributions[0].access_ip.length;
 
 
     htmlString = response.data;
@@ -226,7 +226,127 @@ exports.profile = async (req, res) => {
     // Send the SVG string as the response
     res.send(svgString);
   } catch (err) {
+    return res.json(err)
+  }
+};
+
+
+exports.contributes = async (req, res) => {
+  try {
+
+    const user = req.query['user'] || 'theanishtar';
+    const yearView = req.query['year'];
+    const user_url = `https://api.github.com/users/theanishtar`;
+    const usersProfile = await axios.get(user_url);
+    userCreateAtYear = new Date(usersProfile.data.created_at).getFullYear();
+    const currentYear = new Date().getFullYear();
+    const contributions = [];
+    let total = [];
+
+    while (userCreateAtYear < currentYear+1){
+    let totalYearContribute = 0;
+    let streak = 0;
+    let streakArr = [];
+    let ctbt = 0;
+    // const url = `https://github.com/users/${user}/contributions`;
+    const url = `https://github.com/users/theanishtar/contributions?tab=overview&from=${userCreateAtYear}-01-01&to=${userCreateAtYear}-12-31`;
+    const response = await axios.get(url);
+    const html = response.data;
+
+    // Sử dụng cheerio để phân tích HTML
+    const $ = cheerio.load(html);
+
+    // Lặp qua tất cả các thẻ <td> có thuộc tính data-level và tìm các thẻ <tool-tip> tương ứng
+    $('td[data-level]').each(function() {
+      const td = $(this);
+      const tooltipId = td.attr('id');
+      const tooltip = $(`tool-tip[for="${tooltipId}"]`);
+      const tooltipText = tooltip.text().trim();
+
+      // Thêm nội dung từ thẻ <tool-tip> vào thẻ <td>
+      td.append(`<div class="tooltip-content">${tooltipText}</div>`);
+    });
+
+    // Lấy HTML đã được chỉnh sửa
+    const modifiedHtml = $.html();
+
+    // Duyệt qua từng thẻ <td> có thuộc tính data-date và tooltip-content
+    $('td[data-date][data-level] .tooltip-content').each(function(index, element) {
+      const td = $(this).parent(); // Lấy phần tử <td> bao quanh .tooltip-content
+      const date = td.attr('data-date');
+      const contribute = $(this).text().trim();
+      const dataLevel = td.attr('data-level');
+      if (parseInt(dataLevel) != 0)
+        totalYearContribute++;
+  
+      if (parseInt(dataLevel) == 0){
+        streakArr.push(streak);
+        streak = 0;
+      }
+      else {
+        streak++;
+        streakArr.push(streak);
+      }
+
+      // Đẩy dữ liệu vào mảng kết quả
+        contributions.push({
+          date: date,
+          contribute: contribute,
+          'data-level': parseInt(dataLevel),
+          contributes: getContributions(contribute)
+        });
+
+      ctbt += getContributions(contribute);
+    });
+
+    total.push({
+      year: userCreateAtYear,
+      total: totalYearContribute,
+      streak: Math.max(...streakArr),
+      contributions: ctbt
+    });
+    userCreateAtYear++;
+  }
+
+  contributions.sort((a, b) => {
+    const dateA = new Date(a.date);
+    const dateB = new Date(b.date);
+    return dateA - dateB;
+  });
+
+  // // Ghi HTML đã chỉnh sửa vào một tệp
+  // fs.writeFile('modified.html', modifiedHtml, (err) => {
+  //   if (err) {
+  //     console.error('Error writing to file:', err);
+  //   } else {
+  //     console.log('HTML has been successfully written to modified.html');
+  //   }
+  // });
+
+    // Send the SVG string as the response
+    res.json({
+      total,
+      contributions
+    });
+  } catch (err) {
     console.log(err);
     return res.json(err)
   }
 };
+
+// Hàm để lấy số lượng đóng góp từ chuỗi
+function getContributions(contributionString) {
+  // Sử dụng biểu thức chính quy để tìm số lượng đóng góp
+  const contributionMatch = contributionString.match(/(\d+) contribution/);
+
+  if (contributionMatch) {
+      // Trích xuất số lượng đóng góp và chuyển đổi thành số nguyên
+      return parseInt(contributionMatch[1], 10);
+  } else if (contributionString.includes("No contributions")) {
+      // Trả về 0 nếu không có đóng góp
+      return 0;
+  } else {
+      // Trường hợp khác, có thể xử lý hoặc trả về giá trị mặc định
+      return 0;
+  }
+}
