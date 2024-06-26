@@ -57,7 +57,7 @@ exports.range = async (req, res) => {
     console.log(`Current Streaks: ${currentStreakRange}`);
 
     const svgString = `
-    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="105" height="20" role="img" aria-label="${currentStreakRange}"><script xmlns="" id="nimlmejbmnecnaghgmbahmbaddhjbecg"/><script xmlns=""/><script xmlns=""/><script xmlns=""/><title>Current Streak Range</title><linearGradient id="s" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="r"><rect width="105" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#r)"><rect width="0" height="20" fill="#8a2be2"/><rect x="0" width="105" height="20" fill="#8a2be2"/><rect width="105" height="20" fill="url(#s)"/></g><g fill="#fff" text-anchor="middle" font-family="Verdana,Geneva,DejaVu Sans,sans-serif" text-rendering="geometricPrecision" font-size="110"><text aria-hidden="true" x="525" y="150" fill="#010101" fill-opacity=".3" transform="scale(.1)" textLength="950">${currentStreakRange}</text><text x="525" y="140" transform="scale(.1)" fill="#fff" textLength="950">${currentStreakRange}</text></g><script xmlns=""/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="105" height="20" role="img" aria-label="${currentStreakRange}"><script xmlns="" id="nimlmejbmnecnaghgmbahmbaddhjbecg"/><script xmlns=""/><script xmlns=""/><script xmlns=""/><title>Current Streak Range</title><linearGradient id="s" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="r"><rect width="105" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="contributeUrl(#r)"><rect width="0" height="20" fill="#8a2be2"/><rect x="0" width="105" height="20" fill="#8a2be2"/><rect width="105" height="20" fill="contributeUrl(#s)"/></g><g fill="#fff" text-anchor="middle" font-family="Verdana,Geneva,DejaVu Sans,sans-serif" text-rendering="geometricPrecision" font-size="110"><text aria-hidden="true" x="525" y="150" fill="#010101" fill-opacity=".3" transform="scale(.1)" textLength="950">${currentStreakRange}</text><text x="525" y="140" transform="scale(.1)" fill="#fff" textLength="950">${currentStreakRange}</text></g><script xmlns=""/></svg>
     `;
 
     // Set Content-Type header to tell the browser that the response is an SVG
@@ -111,7 +111,7 @@ exports.streak = async (req, res) => {
         <title>${user} Streaks</title>
         <style>
           a:hover #llink {
-            fill: url(#b);
+            fill: contributeUrl(#b);
             stroke: #ccc
           }
 
@@ -140,7 +140,7 @@ exports.streak = async (req, res) => {
           text-rendering="geometricPrecision" font-weight="700" font-size="110px" line-height="14px" xlink:href="https://streak-stats.demolab.com/?user=${user}">
           <!-- Thay đổi giá trị của x và y để đặt icon vào vị trí mong muốn -->
           <text x="10" y="15"  font-size="15px" line-height="14px">🔥</text>
-          <rect id="llink" stroke="#d5d5d5" fill="url(#a)" x=".5" y=".5" width="78" height="19" rx="2" /><text
+          <rect id="llink" stroke="#d5d5d5" fill="contributeUrl(#a)" x=".5" y=".5" width="78" height="19" rx="2" /><text
             aria-hidden="true" x="475" y="150" fill="#fff" transform="scale(.1)" textLength="510">Streaks</text><text
             x="475" y="140" transform="scale(.1)" textLength="510">Streaks</text><text id="rlink" aria-hidden="true" x="945" y="150"
             fill="#000000" transform="scale(.1)" textLength="180">${currentStreakNumber}</text>
@@ -196,8 +196,8 @@ exports.profile = async (req, res) => {
     const svgString = `<?xml version="1.0" encoding="utf-8"?>
     <svg viewBox="-1.672 0 501.672 108.732" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:bx="https://boxy-svg.com">
       <defs>
-        <style bx:fonts="Allerta">@import url(https://fonts.googleapis.com/css2?family=Allerta%3Aital%2Cwght%400%2C400&amp;display=swap);</style>
-        <style bx:fonts="AR One Sans">@import url(https://fonts.googleapis.com/css2?family=AR+One+Sans%3Aital%2Cwght%400%2C400..700&amp;display=swap);</style>
+        <style bx:fonts="Allerta">@import contributeUrl(https://fonts.googleapis.com/css2?family=Allerta%3Aital%2Cwght%400%2C400&amp;display=swap);</style>
+        <style bx:fonts="AR One Sans">@import contributeUrl(https://fonts.googleapis.com/css2?family=AR+One+Sans%3Aital%2Cwght%400%2C400..700&amp;display=swap);</style>
       </defs>
       <image width="1584" height="396" x="-309.3475754867652" y="51.999999603408014" style="" transform="matrix(0.316963, 0, 0, 0.284838, 96.543409, -18.343507)" xlink:href="${bg_png()}">
         <title>Background</title>
@@ -230,98 +230,97 @@ exports.profile = async (req, res) => {
   }
 };
 
+const getUserCreateAtYear = async (user) => {
+  try {
+    const user_contributeUrl = `https://api.github.com/users/${user}`;
+    const { data: { created_at } } = await axios.get(user_contributeUrl);
+    return new Date(created_at).getFullYear();
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+    throw error;
+  }
+};
 
 exports.contributes = async (req, res) => {
   try {
 
     const user = req.query['user'] || 'theanishtar';
     const yearView = req.query['year'];
-    const user_url = `https://api.github.com/users/${user}`;
-    const usersProfile = await axios.get(user_url);
-    userCreateAtYear = new Date(usersProfile.data.created_at).getFullYear();
-    const currentYear = new Date().getFullYear();
+    let userCreateAtYear = await getUserCreateAtYear(user);
+    let currentYear = new Date().getFullYear();
     const contributions = [];
     let total = [];
 
-    while (userCreateAtYear < currentYear+1){
-    let totalYearContribute = 0;
-    let streak = 0;
-    let streakArr = [];
-    let ctbt = 0;
-    // const url = `https://github.com/users/${user}/contributions`;
-    const url = `https://github.com/users/${user}/contributions?tab=overview&from=${userCreateAtYear}-01-01&to=${userCreateAtYear}-12-31`;
-    const response = await axios.get(url);
-    const html = response.data;
-
-    // Sử dụng cheerio để phân tích HTML
-    const $ = cheerio.load(html);
-
-    // Lặp qua tất cả các thẻ <td> có thuộc tính data-level và tìm các thẻ <tool-tip> tương ứng
-    $('td[data-level]').each(function() {
-      const td = $(this);
-      const tooltipId = td.attr('id');
-      const tooltip = $(`tool-tip[for="${tooltipId}"]`);
-      const tooltipText = tooltip.text().trim();
-
-      // Thêm nội dung từ thẻ <tool-tip> vào thẻ <td>
-      td.append(`<div class="tooltip-content">${tooltipText}</div>`);
-    });
-
-    // Lấy HTML đã được chỉnh sửa
-    const modifiedHtml = $.html();
-
-    // Duyệt qua từng thẻ <td> có thuộc tính data-date và tooltip-content
-    $('td[data-date][data-level] .tooltip-content').each(function(index, element) {
-      const td = $(this).parent(); // Lấy phần tử <td> bao quanh .tooltip-content
-      const date = td.attr('data-date');
-      const contribute = $(this).text().trim();
-      const dataLevel = td.attr('data-level');
-      if (parseInt(dataLevel) != 0)
-        totalYearContribute++;
-  
-      if (parseInt(dataLevel) == 0){
-        streakArr.push(streak);
-        streak = 0;
+    while (userCreateAtYear < currentYear+1) { 
+      if (yearView){
+        userCreateAtYear = yearView;
+        currentYear = yearView-1;
       }
-      else {
-        streak++;
-        streakArr.push(streak);
-      }
+      let totalYearContribute = 0;
+      let streak = 0;
+      let streaks = 0;
+      let ctbt = 0;
+      
+      const contributeUrl = `https://github.com/users/${user}/contributions?tab=overview&from=${userCreateAtYear}-01-01&to=${userCreateAtYear}-12-31`;
+      const resContributionAtYear = await axios.get(contributeUrl);
 
-      // Đẩy dữ liệu vào mảng kết quả
-        contributions.push({
-          date: date,
-          contribute: contribute,
-          'data-level': parseInt(dataLevel),
-          contributes: getContributions(contribute)
-        });
+      // Sử dụng cheerio để phân tích HTML
+      const $ = cheerio.load(resContributionAtYear.data);
 
-      ctbt += getContributions(contribute);
-    });
+      // Lặp qua tất cả các thẻ <td> có thuộc tính data-level và tìm các thẻ <tool-tip> tương ứng
+      $('td[data-level]').each(function() {
+        const td = $(this);
+        const tooltipId = td.attr('id');
+        const tooltip = $(`tool-tip[for="${tooltipId}"]`);
+        const tooltipText = tooltip.text().trim();
 
-    total.push({
-      year: userCreateAtYear,
-      total: totalYearContribute,
-      streak: Math.max(...streakArr),
-      contributions: ctbt
-    });
-    userCreateAtYear++;
-  }
+        // Thêm nội dung từ thẻ <tool-tip> vào thẻ <td>
+        td.append(`<div class="tooltip-content">${tooltipText}</div>`);
+      });
+
+      // Lấy HTML đã được chỉnh sửa
+      const modifiedHtml = $.html();
+
+      // Duyệt qua từng thẻ <td> có thuộc tính data-date và tooltip-content
+      $('td[data-date][data-level] .tooltip-content').each(function(index, element) {
+        const td = $(this).parent(); // Lấy phần tử <td> bao quanh .tooltip-content
+        const date = td.attr('data-date');
+        const contribute = $(this).text().trim();
+        const dataLevel = td.attr('data-level');
+
+        // if (getContributions(contribute) <= 0){
+        //   streak = 0;
+        // }
+        // else {
+        //   streak++;
+        //   if (streak > streaks)
+        //     streaks = streak;
+        // }
+
+        // Đẩy dữ liệu vào mảng kết quả
+          contributions.push({
+            date: date,
+            contribute: contribute,
+            'data-level': parseInt(dataLevel),
+            contributes: getContributions(contribute)
+          });
+
+        ctbt += getContributions(contribute);
+      });
+
+      total.push({
+        year: userCreateAtYear,
+        // streaks: streaks,
+        contributions: ctbt
+      });
+      userCreateAtYear++;
+    }
 
   contributions.sort((a, b) => {
     const dateA = new Date(a.date);
     const dateB = new Date(b.date);
     return dateA - dateB;
   });
-
-  // // Ghi HTML đã chỉnh sửa vào một tệp
-  // fs.writeFile('modified.html', modifiedHtml, (err) => {
-  //   if (err) {
-  //     console.error('Error writing to file:', err);
-  //   } else {
-  //     console.log('HTML has been successfully written to modified.html');
-  //   }
-  // });
 
     // Send the SVG string as the response
     res.json({
