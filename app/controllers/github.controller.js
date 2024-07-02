@@ -393,9 +393,14 @@ exports.banner = async (req, res) => {
         <style bx:fonts="Allerta">@import contributeUrl(https://fonts.googleapis.com/css2?family=Allerta%3Aital%2Cwght%400%2C400&amp;display=swap);</style>
         <style bx:fonts="AR One Sans">@import contributeUrl(https://fonts.googleapis.com/css2?family=AR+One+Sans%3Aital%2Cwght%400%2C400..700&amp;display=swap);</style>
       </defs>
-      <image  width="1584" height="396"  preserveAspectRatio="xMidYMid slice" x="-309.3475754867652" y="51.999999603408014" style="" transform="matrix(0.316963, 0, 0, 0.284838, 96.543409, -18.343507)" xlink:href="${backgroundData[background]}">
+
+      <!-- Nền -->
+      <image  width="1584" height="396"  preserveAspectRatio="xMidYMid slice" x="-309.3475754867652" y="51.999999603408014" style="" transform="matrix(0.316963, 0, 0, 0.284838, 96.543409, -18.343507)" 
+        xlink:href="${!isNaN(background) ? backgroundData[background] : background}"
+      >
         <title>Background</title>
       </image>
+      
       <text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 28px;" transform="matrix(0.536962, 0, 0, 0.536965, 84.994726, 73.421301)"> </text>
       <text style="fill: rgb(255, 255, 255); font-family: Allerta; font-size: 28px; font-weight: 700; white-space: pre;" transform="matrix(1.226279, 0, 0, 1.28091, 81.830961, 66.402548)">TRAN HUU DANG</text>
       <text style="fill: rgb(131, 235, 241); font-family: 'AR One Sans'; font-size: 28px; white-space: pre;" transform="matrix(0.526322, 0, 0, 0.431086, 91.022329, 95.153448)">FULLSTACK DEVELOPER</text>
