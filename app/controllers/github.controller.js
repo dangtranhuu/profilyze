@@ -7,6 +7,7 @@ const path = require('path');
 const Github = require("../models/github.model");
 const svgGenerate = require('../utils/svgGenerate');
 const {java_png, bg_png, fire_png, frog_gif, sharingan_png} = require('../utils/base64/index');
+const {data} = require('../utils/base64/background');
 
 
 function getClientIp(req) {
@@ -349,3 +350,82 @@ function getContributions(contributionString) {
       return 0;
   }
 }
+
+function getTechs(tech) {
+  const { git, node, react, vsc, java, vue, js } = require('../utils/base64/gif');
+  switch (tech) {
+    case 'java':
+      return java;
+    case 'git':
+      return git;
+    case 'node':
+      return node;
+    case 'react':
+      return react;
+    case 'vsc':
+      return vsc;
+    case 'vue':
+      return vue;
+    case 'js':
+      return js;
+    default:
+      return '';
+  }
+}
+
+exports.banner = async (req, res) => {
+  try {
+    const user = req.query['user'] || 'theanishtar';
+    const name = req.query['name'] || 'TRAN HUU DANG';
+    const description = req.query['description'] || 'Fullstack developer';
+    const template = req.query['template'] || `basic`;
+    const background = req.query['background'] || `basic`;
+    const streaks = req.query['streaks'] || `none`;
+    const view = req.query['view'] || `none`;
+    const technical = req.query['tech'] || 'java';
+
+    const techDat = getTechs(technical);
+    const backgroundData = data(); 
+
+    const svgString = `<?xml version="1.0" encoding="utf-8"?>
+    <svg viewBox="-1.672 0 501.672 108.732" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:bx="https://boxy-svg.com">
+      <defs>
+        <style bx:fonts="Allerta">@import contributeUrl(https://fonts.googleapis.com/css2?family=Allerta%3Aital%2Cwght%400%2C400&amp;display=swap);</style>
+        <style bx:fonts="AR One Sans">@import contributeUrl(https://fonts.googleapis.com/css2?family=AR+One+Sans%3Aital%2Cwght%400%2C400..700&amp;display=swap);</style>
+      </defs>
+      <image  width="1584" height="396"  preserveAspectRatio="xMidYMid slice" x="-309.3475754867652" y="51.999999603408014" style="" transform="matrix(0.316963, 0, 0, 0.284838, 96.543409, -18.343507)" xlink:href="${backgroundData[background]}">
+        <title>Background</title>
+      </image>
+      <text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 28px;" transform="matrix(0.536962, 0, 0, 0.536965, 84.994726, 73.421301)"> </text>
+      <text style="fill: rgb(255, 255, 255); font-family: Allerta; font-size: 28px; font-weight: 700; white-space: pre;" transform="matrix(1.226279, 0, 0, 1.28091, 81.830961, 66.402548)">TRAN HUU DANG</text>
+      <text style="fill: rgb(131, 235, 241); font-family: 'AR One Sans'; font-size: 28px; white-space: pre;" transform="matrix(0.526322, 0, 0, 0.431086, 91.022329, 95.153448)">FULLSTACK DEVELOPER</text>
+      
+      <!-- streak logo 
+      <image width="512" height="512" x="-18.153" y="2.38" style="" transform="matrix(0.027412, 0, 0, 0.027442, 81.743475, 2.7735)" xlink:href="${fire_png()}">
+        <title>3d-fire</title>
+      </image>
+      <text style="fill: rgb(131, 235, 241); font-family: 'AR One Sans'; font-size: 28px; white-space: pre;" transform="matrix(0.337932, 0, 0, 0.337219, 99.962942, 14.705896)">123</text>
+      -->
+
+      <!-- Skill logo -->
+      <image width="60.6" height="86.945" x="432.735" y="26.78" style="" xlink:href="${techDat()}">
+        <title>${technical}</title>
+      </image>
+
+      <!-- View logo 
+      <image width="13.29" height="13.29" x="147.405" y="4.613" style="" xlink:href="${sharingan_png()}">
+        <title>Sharingan</title>
+      </image>
+      <text style="fill: rgb(131, 235, 241); font-family: 'AR One Sans'; font-size: 28px; white-space: pre;" transform="matrix(0.337932, 0, 0, 0.337219, 167.196057, 14.812479)">1233</text>
+      -->
+
+    </svg>`;
+
+    res.set('Content-Type', 'image/svg+xml');
+
+    // Send the SVG string as the response
+    res.send(svgString);
+  } catch (err) {
+    return res.json(err)
+  }
+};
