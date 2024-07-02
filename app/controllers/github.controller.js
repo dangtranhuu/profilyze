@@ -379,7 +379,7 @@ exports.banner = async (req, res) => {
     const name = req.query['name'] || 'TRAN HUU DANG';
     const description = req.query['description'] || 'Fullstack developer';
     const template = req.query['template'] || `basic`;
-    const background = req.query['background'] || `basic`;
+    const background = req.query['background'] || bg_png();
     const streaks = req.query['streaks'] || `none`;
     const view = req.query['view'] || `none`;
     const technical = req.query['tech'] || 'java';
