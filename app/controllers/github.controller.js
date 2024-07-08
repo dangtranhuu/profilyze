@@ -398,7 +398,7 @@ exports.banner = async (req, res) => {
 
       <!-- Nền -->
       <image  width="1584" height="396"  preserveAspectRatio="xMidYMid slice" x="-309.3475754867652" y="51.999999603408014" style="" transform="matrix(0.316963, 0, 0, 0.284838, 96.543409, -18.343507)" 
-        xlink:href="${background}"
+        xlink:href="${background[0].data}"
       >
         <title>Background</title>
       </image>
