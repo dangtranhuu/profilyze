@@ -4,39 +4,92 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SVG Display</title>
-  <!-- <style>
-    .svg-container {
-      width: 400px;
-      /* Đặt kích thước cho mỗi SVG container */
+  <title>Image Gallery</title>
+  <style>
+    .image-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
     }
 
-    .svg-container svg {
-      width: 100%;
-      /* Đảm bảo rằng SVG fill đầy đủ chiều rộng của container */
+    .image-item {
+      text-align: center;
     }
-  </style> -->
+
+    .image-item img {
+      max-width: 200px;
+      max-height: 200px;
+    }
+
+    .image-item p {
+      margin-top: 10px;
+      font-size: 1em;
+      color: #333;
+    }
+  </style>
 </head>
 
 <body>
-  <div class="svg-container" id="treakStatsContainer"></div>
-  <div class="svg-container" id="mostUsedLanguagesContainer"></div>
-  <div class="svg-container" id="gitHubStatsContainer"></div>
-  <div class="svg-container" id="contributionGraphContainer"></div>
+  <h1>Technicals logo</h1>
+  <div class="image-list" id="imageList"></div>
 
   <script>
-    // Lấy dữ liệu JSON từ máy chủ
-    const url = `http://localhost:5152/api/auth/dangth`;
-    fetch(url)
-      .then(response => response.json())
-      .then(data => {
-        // Hiển thị từng SVG trong các container có id tương ứng
-        document.getElementById('treakStatsContainer').innerHTML = data.treakStats;
-        document.getElementById('mostUsedLanguagesContainer').innerHTML = data.mostUsedLanguages;
-        document.getElementById('gitHubStatsContainer').innerHTML = data.gitHubStats;
-        document.getElementById('contributionGraphContainer').innerHTML = data.contributionGraph;
-      })
-      .catch(error => console.error('Error fetching data:', error));
+    async function fetchNames() {
+      try {
+        const response = await fetch('http://localhost:8080/api/technical/names');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      } catch (error) {
+        console.error('There was a problem with fetching names:', error);
+        return [];
+      }
+    }
+
+    async function fetchImageData(name) {
+      try {
+        const response = await fetch(`http://localhost:8080/api/technical/find?name=${name}`);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      } catch (error) {
+        console.error(`There was a problem with fetching image data for ${name}:`, error);
+        return null;
+      }
+    }
+
+    async function displayImages() {
+      try {
+        const names = await fetchNames();
+        const imageList = document.getElementById('imageList');
+
+        for (const name of names) {
+          const imageData = await fetchImageData(name);
+          if (imageData && imageData.data) {
+            const imageItem = document.createElement('div');
+            imageItem.className = 'image-item';
+
+            const img = document.createElement('img');
+            img.src = imageData.data; // Dữ liệu base64 từ API
+
+            const caption = document.createElement('p');
+            caption.textContent = imageData.name || name;
+
+            imageItem.appendChild(img);
+            imageItem.appendChild(caption);
+
+            imageList.appendChild(imageItem);
+          }
+        }
+      } catch (error) {
+        console.error('There was a problem with displaying images:', error);
+      }
+    }
+
+    // Gọi hàm displayImages khi trang được tải
+    displayImages();
   </script>
 </body>
 

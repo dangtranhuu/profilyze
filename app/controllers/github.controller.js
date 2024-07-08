@@ -5,9 +5,9 @@ const cheerio = require('cheerio');
 const fs = require('fs');
 const path = require('path');
 const Github = require("../models/github.model");
-const svgGenerate = require('../utils/svgGenerate');
-const {java_png, bg_png, fire_png, frog_gif, sharingan_png} = require('../utils/base64/index');
-const {data} = require('../utils/base64/background');
+const {bg_png, fire_png, sharingan_png} = require('../utils/base64/index');
+const Technical = require("../models/techical.model");
+const Background = require("../models/background.model");
 
 
 function getClientIp(req) {
@@ -381,13 +381,13 @@ exports.banner = async (req, res) => {
     const name = req.query['name'] || 'TRAN HUU DANG';
     const description = req.query['description'] || 'Fullstack developer';
     const template = req.query['template'] || `basic`;
-    const background = req.query['background'] || bg_png();
     const streaks = req.query['streaks'] || `none`; // default = auto
-    const technical = req.query['tech'] || 'java';
+    const technical = await Technical.find({name: req.query['tech'] || 'java'});
+    let background = await Background.find({name: req.query['background']});
     const view = req.query['view'] || `none`; // default = auto
 
-    const techDat = getTechs(technical);
-    const backgroundData = data(); 
+    if (background.length == 0)
+      background = req.query['background'] || bg_png();
 
     const svgString = `<?xml version="1.0" encoding="utf-8"?>
     <svg viewBox="-1.672 0 501.672 108.732" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:bx="https://boxy-svg.com">
@@ -398,7 +398,7 @@ exports.banner = async (req, res) => {
 
       <!-- Nền -->
       <image  width="1584" height="396"  preserveAspectRatio="xMidYMid slice" x="-309.3475754867652" y="51.999999603408014" style="" transform="matrix(0.316963, 0, 0, 0.284838, 96.543409, -18.343507)" 
-        xlink:href="${!isNaN(background) ? backgroundData[background] : background}"
+        xlink:href="${background}"
       >
         <title>Background</title>
       </image>
@@ -408,8 +408,8 @@ exports.banner = async (req, res) => {
       <text style="fill: rgb(131, 235, 241); font-family: 'AR One Sans'; font-size: 28px; white-space: pre;" transform="matrix(0.526322, 0, 0, 0.431086, 91.022329, 95.153448)">FULLSTACK DEVELOPER</text>
       
       <!-- Skill logo -->
-      <image width="60.6" height="86.945" x="432.735" y="26.78" style="" xlink:href="${techDat()}">
-        <title>${technical}</title>
+      <image width="60.6" height="86.945" x="432.735" y="26.78" style="" xlink:href="${technical[0].data}">
+        <title>${technical[0].name}</title>
       </image>
 
       ${streaks === 'auto' ?
