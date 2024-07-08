@@ -352,30 +352,6 @@ function getContributions(contributionString) {
   }
 }
 
-function getTechs(tech) {
-  const { git, node, react, vsc, java, vue, js, javaGif } = require('../utils/base64/gif');
-  switch (tech) {
-    case 'java':
-      return java;
-    case 'javaGif':
-      return javaGif;
-    case 'git':
-      return git;
-    case 'node':
-      return node;
-    case 'react':
-      return react;
-    case 'vsc':
-      return vsc;
-    case 'vue':
-      return vue;
-    case 'js':
-      return js;
-    default:
-      return 'java';
-  }
-}
-
 exports.banner = async (req, res) => {
   try {
     const user = req.query['user'] || 'theanishtar';
@@ -403,7 +379,7 @@ exports.banner = async (req, res) => {
     }
     
 
-    const svgString = generateSVGString(background[0].data, technical, streaks, view, skillArr);
+    const svgString = generateSVGString(background[0].data, technical, fire_png(), sharingan_png(), skillArr);
 
     res.set('Content-Type', 'image/svg+xml');
 

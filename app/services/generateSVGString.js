@@ -22,17 +22,17 @@ exports.generateSVGString = (background, technical, streaks, view, additionalIma
         <title>${technical[0].name}</title>
       </image>`;
 
-  if (streaks === 'auto') {
+  if (streaks !== 'none') {
     svgString += `
-      <image width="512" height="512" x="-18.153" y="2.38" style="" transform="matrix(0.027412, 0, 0, 0.027442, 81.743475, 2.7735)" xlink:href="${fire_png()}">
+      <image width="512" height="512" x="-18.153" y="2.38" style="" transform="matrix(0.027412, 0, 0, 0.027442, 81.743475, 2.7735)" xlink:href="${streaks}">
         <title>3d-fire</title>
       </image>
       <text style="fill: rgb(131, 235, 241); font-family: 'AR One Sans'; font-size: 28px; white-space: pre;" transform="matrix(0.337932, 0, 0, 0.337219, 99.962942, 14.705896)">123</text>`;
   }
 
-  if (view === 'auto') {
+  if (view !== 'none') {
     svgString += `
-      <image width="13.29" height="13.29" x="147.405" y="4.613" style="" xlink:href="${sharingan_png()}">
+      <image width="13.29" height="13.29" x="147.405" y="4.613" style="" xlink:href="${view}">
         <title>Sharingan</title>
       </image>
       <text style="fill: rgb(131, 235, 241); font-family: 'AR One Sans'; font-size: 28px; white-space: pre;" transform="matrix(0.337932, 0, 0, 0.337219, 167.196057, 14.812479)">1233</text>`;
