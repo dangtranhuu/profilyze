@@ -30,13 +30,23 @@
 </head>
 
 <body>
-  <h1>Technicals logo</h1>
-  <div class="image-list" id="imageList"></div>
+  <h1>Image Gallery</h1>
+  <div>
+    <h2>Technical Images</h2>
+    <div class="image-list" id="technicalImageList"></div>
+  </div>
+
+  <div>
+    <h2>Background Images</h2>
+    <div class="image-list" id="backgroundImageList"></div>
+  </div>
 
   <script>
-    async function fetchNames() {
+    const baseURL = 'https://count-viewer.vercel.app/api'; // Base URL
+
+    async function fetchNames(apiEndpoint) {
       try {
-        const response = await fetch('http://localhost:8080/api/technical/names');
+        const response = await fetch(`${baseURL}/${apiEndpoint}/names`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -47,9 +57,9 @@
       }
     }
 
-    async function fetchImageData(name) {
+    async function fetchImageData(name, apiEndpoint) {
       try {
-        const response = await fetch(`http://localhost:8080/api/technical/find?name=${name}`);
+        const response = await fetch(`${baseURL}/${apiEndpoint}/find?name=${name}`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -60,22 +70,23 @@
       }
     }
 
-    async function displayImages() {
+    async function displayImages(apiEndpoint, imageListId) {
       try {
-        const names = await fetchNames();
-        const imageList = document.getElementById('imageList');
+        const names = await fetchNames(apiEndpoint);
+        const imageList = document.getElementById(imageListId);
+        imageList.innerHTML = ''; // Clear existing images
 
         for (const name of names) {
-          const imageData = await fetchImageData(name);
+          const imageData = await fetchImageData(name, apiEndpoint);
           if (imageData && imageData.data) {
             const imageItem = document.createElement('div');
             imageItem.className = 'image-item';
 
             const img = document.createElement('img');
-            img.src = imageData.data; // Dữ liệu base64 từ API
+            img.src = imageData.data; // Base64 data from API
 
             const caption = document.createElement('p');
-            caption.textContent = imageData.name || name;
+            caption.textContent = imageData.description || name;
 
             imageItem.appendChild(img);
             imageItem.appendChild(caption);
@@ -84,12 +95,13 @@
           }
         }
       } catch (error) {
-        console.error('There was a problem with displaying images:', error);
+        console.error(`There was a problem with displaying ${apiEndpoint} images:`, error);
       }
     }
 
-    // Gọi hàm displayImages khi trang được tải
-    displayImages();
+    // Display images for both Technical and Background
+    displayImages('technical', 'technicalImageList');
+    displayImages('background', 'backgroundImageList');
   </script>
 </body>
 
