@@ -9,9 +9,14 @@ const config = require('./app/config/index');
 var dotent = require('dotenv');
 var getIP = require('ipware')().get_ip;
 const axios = require('axios');
+const path = require('path');
 
 const app = express();
 const server = http.createServer(app); // Tạo server từ express app
+
+// Cấu hình view engine EJS
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'app', 'views'));
 
 dotent.config();
 app.use(cors());

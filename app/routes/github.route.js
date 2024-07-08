@@ -14,4 +14,5 @@ module.exports = function (app, axios) {
   app.get("/api/github/profile", controller.profile); //api/github/profile?user=theanishtar
   app.get("/api/github/contributes", controller.contributes); //api/github/contributes?user=theanishtar
   app.get("/api/github/banner", controller.banner); //api/github/contributes?user=theanishtar
+  app.get("/web/github/banner", controller.bannerView); //api/github/contributes?user=theanishtar
 };

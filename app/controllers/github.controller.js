@@ -437,3 +437,15 @@ exports.banner = async (req, res) => {
     return res.json(err)
   }
 };
+
+
+exports.bannerView = async (req, res) => {
+  try {
+    const images = data(); 
+    // Trả về file HTML
+    // res.sendFile(path.join(__dirname, '..', 'public', 'banner.html'));
+    res.render('banner', { images });
+  } catch (err) {
+    return res.json(err)
+  }
+};
