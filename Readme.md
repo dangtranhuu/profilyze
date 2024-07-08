@@ -6,4 +6,4 @@
 
 <img align="center" alt="Profile Details" src="https://count-viewer.vercel.app/api/github/banner?user=theanishtar&background=https://github.com/dangtranhuu/banner-profile/blob/main/gif/17.gif?raw=true&tech=vue" />
 
-<img align="center" alt="Profile Details" src="https://count-viewer.vercel.app/api/github/banner?user=theanishtar&background=2?raw=true&tech=vue" />
+<img align="center" alt="Profile Details" src="https://count-viewer.vercel.app/api/github/banner?user=theanishtar&background=2&tech=vue" />
