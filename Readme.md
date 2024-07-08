@@ -10,5 +10,9 @@ See: [https://count-viewer.vercel.app/web/github/banner](https://count-viewer.ve
 
 <img align="center" alt="Profile Details" src="https://count-viewer.vercel.app/api/github/banner?user=theanishtar&background=2&tech=vue" />
 
+<img align="center" alt="Profile Details" src="https://count-viewer.vercel.app/api/github/banner?user=theanishtar&background=8&tech=react" />
+
+<img align="center" alt="Profile Details" src="https://count-viewer.vercel.app/api/github/banner?user=theanishtar&background=7&tech=js" />
+
 
 
