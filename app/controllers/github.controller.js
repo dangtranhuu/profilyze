@@ -359,9 +359,9 @@ exports.banner = async (req, res) => {
     const description = req.query['description'] || 'Fullstack developer';
     const template = req.query['template'] || `basic`;
     const streaks = req.query['streaks'] || `none`; // default = auto
+    const view = req.query['view'] || `none`; // default = auto
     const technical = await Technical.find({name: req.query['tech'] || 'java'});
     let background = await Background.find({name: req.query['background']});
-    const view = req.query['view'] || `none`; // default = auto
     const skills = req.query.skills ? req.query.skills.split(',') : []; //api/technical/images?skills=github,nodejs,reactjs
 
     if (background.length == 0)
@@ -379,7 +379,7 @@ exports.banner = async (req, res) => {
     }
     
 
-    const svgString = generateSVGString(background[0].data, technical, fire_png(), sharingan_png(), skillArr);
+    const svgString = generateSVGString(background[0].data, technical, streaks, view, skillArr, fire_png(), sharingan_png());
 
     res.set('Content-Type', 'image/svg+xml');
 

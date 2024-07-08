@@ -1,5 +1,5 @@
 // Tạo hàm tạo chuỗi SVG động và xuất hàm này
-exports.generateSVGString = (background, technical, streaks, view, additionalImages) => {
+exports.generateSVGString = (background, technical, streaks, view, additionalImages, fire, sharingan) => {
   let svgString = `<?xml version="1.0" encoding="utf-8"?>
     <svg viewBox="-1.672 0 501.672 108.732" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:bx="https://boxy-svg.com">
       <defs>
@@ -24,7 +24,7 @@ exports.generateSVGString = (background, technical, streaks, view, additionalIma
 
   if (streaks !== 'none') {
     svgString += `
-      <image width="512" height="512" x="-18.153" y="2.38" style="" transform="matrix(0.027412, 0, 0, 0.027442, 81.743475, 2.7735)" xlink:href="${streaks}">
+      <image width="512" height="512" x="-18.153" y="2.38" style="" transform="matrix(0.027412, 0, 0, 0.027442, 81.743475, 2.7735)" xlink:href="${fire}">
         <title>3d-fire</title>
       </image>
       <text style="fill: rgb(131, 235, 241); font-family: 'AR One Sans'; font-size: 28px; white-space: pre;" transform="matrix(0.337932, 0, 0, 0.337219, 99.962942, 14.705896)">123</text>`;
@@ -32,7 +32,7 @@ exports.generateSVGString = (background, technical, streaks, view, additionalIma
 
   if (view !== 'none') {
     svgString += `
-      <image width="13.29" height="13.29" x="147.405" y="4.613" style="" xlink:href="${view}">
+      <image width="13.29" height="13.29" x="147.405" y="4.613" style="" xlink:href="${sharingan}">
         <title>Sharingan</title>
       </image>
       <text style="fill: rgb(131, 235, 241); font-family: 'AR One Sans'; font-size: 28px; white-space: pre;" transform="matrix(0.337932, 0, 0, 0.337219, 167.196057, 14.812479)">1233</text>`;
