@@ -380,9 +380,9 @@ exports.banner = async (req, res) => {
     const description = req.query['description'] || 'Fullstack developer';
     const template = req.query['template'] || `basic`;
     const background = req.query['background'] || bg_png();
-    const streaks = req.query['streaks'] || `none`;
-    const view = req.query['view'] || `none`;
+    const streaks = req.query['streaks'] || `none`; // default = auto
     const technical = req.query['tech'] || 'java';
+    const view = req.query['view'] || `none`; // default = auto
 
     const techDat = getTechs(technical);
     const backgroundData = data(); 
@@ -405,25 +405,28 @@ exports.banner = async (req, res) => {
       <text style="fill: rgb(255, 255, 255); font-family: Allerta; font-size: 28px; font-weight: 700; white-space: pre;" transform="matrix(1.226279, 0, 0, 1.28091, 81.830961, 66.402548)">TRAN HUU DANG</text>
       <text style="fill: rgb(131, 235, 241); font-family: 'AR One Sans'; font-size: 28px; white-space: pre;" transform="matrix(0.526322, 0, 0, 0.431086, 91.022329, 95.153448)">FULLSTACK DEVELOPER</text>
       
-      <!-- streak logo 
-      <image width="512" height="512" x="-18.153" y="2.38" style="" transform="matrix(0.027412, 0, 0, 0.027442, 81.743475, 2.7735)" xlink:href="${fire_png()}">
-        <title>3d-fire</title>
-      </image>
-      <text style="fill: rgb(131, 235, 241); font-family: 'AR One Sans'; font-size: 28px; white-space: pre;" transform="matrix(0.337932, 0, 0, 0.337219, 99.962942, 14.705896)">123</text>
-      -->
-
       <!-- Skill logo -->
       <image width="60.6" height="86.945" x="432.735" y="26.78" style="" xlink:href="${techDat()}">
         <title>${technical}</title>
       </image>
 
-      <!-- View logo 
-      <image width="13.29" height="13.29" x="147.405" y="4.613" style="" xlink:href="${sharingan_png()}">
-        <title>Sharingan</title>
+      ${streaks === 'auto' ?
+        `<image width="512" height="512" x="-18.153" y="2.38" style="" transform="matrix(0.027412, 0, 0, 0.027442, 81.743475, 2.7735)" xlink:href="${fire_png()}">
+        <title>3d-fire</title>
       </image>
-      <text style="fill: rgb(131, 235, 241); font-family: 'AR One Sans'; font-size: 28px; white-space: pre;" transform="matrix(0.337932, 0, 0, 0.337219, 167.196057, 14.812479)">1233</text>
-      -->
+      <text style="fill: rgb(131, 235, 241); font-family: 'AR One Sans'; font-size: 28px; white-space: pre;" transform="matrix(0.337932, 0, 0, 0.337219, 99.962942, 14.705896)">123</text>`
+      :
+        `<!-- streak logo -->`
+      }
 
+      ${view === 'auto' ? 
+        `<image width="13.29" height="13.29" x="147.405" y="4.613" style="" xlink:href="${sharingan_png()}">
+          <title>Sharingan</title>
+        </image>
+        <text style="fill: rgb(131, 235, 241); font-family: 'AR One Sans'; font-size: 28px; white-space: pre;" transform="matrix(0.337932, 0, 0, 0.337219, 167.196057, 14.812479)">1233</text>`
+      : 
+        `<!-- View logo  -->`
+      }
     </svg>`;
 
     res.set('Content-Type', 'image/svg+xml');
