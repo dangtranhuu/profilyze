@@ -8,14 +8,16 @@ See: [https://count-viewer.vercel.app/web/github/banner](https://count-viewer.ve
 
 <!-- <img align="center" alt="Profile Details" src="https://count-viewer.vercel.app/api/github/banner?user=theanishtar&background=https://github.com/dangtranhuu/banner-profile/blob/main/gif/17.gif?raw=true&tech=vue" /> -->
 
-<img align="center" alt="Profile Details" src="https://count-viewer.vercel.app/api/github/banner?user=theanishtar&background=0&tech=java" />
+<img align="center" alt="Profile Details" src="https://count-viewer.vercel.app/api/github/banner?background=thean&tech=java" />
 
-<img align="center" alt="Profile Details" src="https://count-viewer.vercel.app/api/github/banner?user=theanishtar&background=3&tech=vue" />
+<img align="center" alt="Profile Details" src="https://count-viewer.vercel.app/api/github/banner?background=blackCatMeow&tech=vuejs" />
 
-<img align="center" alt="Profile Details" src="https://count-viewer.vercel.app/api/github/banner?user=theanishtar&background=8&tech=react" />
+<img align="center" alt="Profile Details" src="https://count-viewer.vercel.app/api/github/banner?background=koiPond&tech=reactjs" />
 
-<img align="center" alt="Profile Details" src="https://count-viewer.vercel.app/api/github/banner?user=theanishtar&background=9&tech=node" />
+<img align="center" alt="Profile Details" src="https://count-viewer.vercel.app/api/github/banner?background=winScreen&tech=nodejs" />
 
-<img align="center" alt="Profile Details" src="https://count-viewer.vercel.app/api/github/banner?user=theanishtar&background=5&tech=vsc" />
+<img align="center" alt="Profile Details" src="https://count-viewer.vercel.app/api/github/banner?background=relax&tech=vsc" />
+
+<img align="center" alt="Profile Details" src="https://count-viewer.vercel.app/api/github/banner?background=sunsetFishing&tech=python" />
 
 
