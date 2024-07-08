@@ -369,7 +369,7 @@ function getTechs(tech) {
     case 'js':
       return js;
     default:
-      return '';
+      return 'java';
   }
 }
 
