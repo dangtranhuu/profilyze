@@ -122,7 +122,7 @@
             img.src = imageData.data; // Base64 data from API
 
             const caption = document.createElement('p');
-            caption.textContent = imageData.description || name;
+            caption.textContent = imageData.name || name;
 
             imageItem.appendChild(img);
             imageItem.appendChild(caption);
