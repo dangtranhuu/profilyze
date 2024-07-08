@@ -62,6 +62,7 @@ require("./app/routes/countview.route")(app);
 require("./app/routes/github.route")(app, axios);
 require("./app/routes/blog.route")(app);
 require("./app/routes/auth.route")(app);
+require("./app/routes/technical.route")(app);
 
 //Thay vì sử dụng app.listen, sử dụng server.listen để sử dụng cùng một cổng cho cả express app và Socket.IO:
 server.listen(PORT, () => {

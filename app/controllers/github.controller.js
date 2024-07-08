@@ -440,7 +440,6 @@ exports.banner = async (req, res) => {
   }
 };
 
-
 exports.bannerView = async (req, res) => {
   try {
     const images = data(); 
