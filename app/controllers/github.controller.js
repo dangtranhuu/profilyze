@@ -352,10 +352,12 @@ function getContributions(contributionString) {
 }
 
 function getTechs(tech) {
-  const { git, node, react, vsc, java, vue, js } = require('../utils/base64/gif');
+  const { git, node, react, vsc, java, vue, js, javaGif } = require('../utils/base64/gif');
   switch (tech) {
     case 'java':
       return java;
+    case 'javaGif':
+      return javaGif;
     case 'git':
       return git;
     case 'node':
