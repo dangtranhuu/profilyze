@@ -358,8 +358,8 @@ exports.banner = async (req, res) => {
     const name = req.query['name'] || 'TRAN HUU DANG';
     const description = req.query['description'] || 'Fullstack developer';
     const template = req.query['template'] || `basic`;
-    const streaks = await Technical.find({name: req.query['streaks']})  || 'none'; 
-    const view = await Technical.find({name: req.query['view']})  || 'none'; 
+    const streaks = await Technical.find({name: req.query['streaks']}); 
+    const view = await Technical.find({name: req.query['view']}); 
     const technical = await Technical.find({name: req.query['tech'] || 'java'});
     let background = await Background.find({name: req.query['background']});
     const skills = req.query.skills ? req.query.skills.split(',') : []; //api/technical/images?skills=github,nodejs,reactjs
@@ -379,7 +379,7 @@ exports.banner = async (req, res) => {
     }
     
 
-    const svgString = generateSVGString(background[0].data, technical, streaks[0].data, view, skillArr, sharingan_png());
+    const svgString = generateSVGString(background[0].data, technical, streaks, view, skillArr);
 
     res.set('Content-Type', 'image/svg+xml');
 
