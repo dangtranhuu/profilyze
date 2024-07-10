@@ -8,6 +8,7 @@ See: [https://count-viewer.vercel.app/web/github/banner](https://count-viewer.ve
 
 
 <img align="center" alt="Profile Details" src="https://count-viewer.vercel.app/api/github/banner?background=thean&tech=python&streaks=auto&view=auto&skills=github,vsc,vuejs,reactjs,nodejs,gopher" />
+<img align="center" alt="Profile Details" src="https://count-viewer.vercel.app/api/github/banner?background=thean&tech=java&streaks=auto&view=auto&skills=js,angular,vuejs,reactjs,nodejs" />
 
 
 
