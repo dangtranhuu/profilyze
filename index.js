@@ -18,8 +18,12 @@ const server = http.createServer(app); // Tạo server từ express app
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'app', 'views'));
 
+const corsOptions = {
+  origin: 'https://theanishtar.github.io',
+  optionsSuccessStatus: 200,
+};
 dotent.config();
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
