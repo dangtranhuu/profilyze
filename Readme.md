@@ -8,7 +8,7 @@ See: [https://theanishtar.github.io/count-viewer/](https://theanishtar.github.io
 
 
 <img align="center" alt="Profile Details" src="https://count-viewer.vercel.app/api/github/banner?background=thean&tech=python&streaks=auto&view=auto&skills=github,vsc,vuejs,reactjs,nodejs,gopher" />
-<img align="center" alt="Profile Details" src="https://count-viewer.vercel.app/api/github/banner?background=thean&tech=java&streaks=auto&view=auto&skills=js,angular,vuejs,reactjs,nodejs" />
+<img align="center" alt="Profile Details" src="https://count-viewer.vercel.app/api/github/banner?background=thean&tech=java&streaks=fire&view=sharingan&skills=js,angular,vuejs,reactjs,nodejs" />
 
 
 
