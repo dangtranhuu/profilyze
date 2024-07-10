@@ -379,7 +379,7 @@ exports.banner = async (req, res) => {
     }
     
 
-    const svgString = generateSVGString(background[0].data, technical, streaks, view, skillArr);
+    const svgString = generateSVGString(background, technical, streaks, view, skillArr);
 
     res.set('Content-Type', 'image/svg+xml');
 

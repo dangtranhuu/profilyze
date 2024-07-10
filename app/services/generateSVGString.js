@@ -9,8 +9,8 @@ exports.generateSVGString = (background, technical, streaks, view, additionalIma
 
       <!-- Nền -->
       <image width="1584" height="396" preserveAspectRatio="xMidYMid slice" x="-309.3475754867652" y="51.999999603408014" style="" transform="matrix(0.316963, 0, 0, 0.284838, 96.543409, -18.343507)" 
-        xlink:href="${background}">
-        <title>Background</title>
+        xlink:href="${background[0].data}">
+        <title>${background[0].name}</title>
       </image>
 
       <text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 28px;" transform="matrix(0.536962, 0, 0, 0.536965, 84.994726, 73.421301)"> </text>
@@ -25,7 +25,7 @@ exports.generateSVGString = (background, technical, streaks, view, additionalIma
   if (streaks.length != 0) {
     svgString += `
       <image width="512" height="512" x="-18.153" y="2.38" style="" transform="matrix(0.027412, 0, 0, 0.027442, 81.743475, 2.7735)" xlink:href="${streaks[0].data}">
-        <title>3d-fire</title>
+        <title>${streaks[0].name}</title>
       </image>
       <text style="fill: rgb(131, 235, 241); font-family: 'AR One Sans'; font-size: 28px; white-space: pre;" transform="matrix(0.337932, 0, 0, 0.337219, 99.962942, 14.705896)">123</text>`;
   }
@@ -33,7 +33,7 @@ exports.generateSVGString = (background, technical, streaks, view, additionalIma
   if (view.length != 0) {
     svgString += `
       <image width="13.29" height="13.29" x="147.405" y="4.613" style="" xlink:href="${view[0].data}">
-        <title>Sharingan</title>
+        <title>${view[0].name}</title>
       </image>
       <text style="fill: rgb(131, 235, 241); font-family: 'AR One Sans'; font-size: 28px; white-space: pre;" transform="matrix(0.337932, 0, 0, 0.337219, 167.196057, 14.812479)">1233</text>`;
   }
@@ -43,7 +43,7 @@ exports.generateSVGString = (background, technical, streaks, view, additionalIma
   additionalImages.forEach((image, index) => {
     svgString += `
       <image xmlns="http://www.w3.org/2000/svg" width="512" height="512" x="${xOffset}" y="2900" style="" transform="matrix(0.027412, 0, 0, 0.027442, 81.743475, 2.7735)" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="${image.data}">
-        <title>3d-fire</title>
+        <title>${image.name}</title>
       </image>`;
     xOffset += 700; // Tăng giá trị x cho ảnh tiếp theo
   });
