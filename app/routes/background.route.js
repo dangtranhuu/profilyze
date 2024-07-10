@@ -9,8 +9,9 @@ module.exports = function (app, axios) {
     next();
   });
 
-  app.get("/api/background/all", controller.getAll);
-  app.get("/api/background/find", controller.getByName);
+  app.get("/api/backgrounds", controller.getAll);
+  app.get("/api/background", controller.getByName);
   app.get("/api/background/names", controller.getAllName);
   app.post("/api/background/add", controller.addAll);
+  app.delete("/api/background", controller.deleteByName);
 };

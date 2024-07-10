@@ -10,7 +10,7 @@ module.exports = function (app, axios) {
   });
 
   app.get("/api/technical/all", controller.getAll);
-  app.get("/api/technical/find", controller.getByName);
+  app.get("/api/technical", controller.getByName);
   app.get("/api/technical/names", controller.getAllName);
   app.post("/api/technical/add", controller.addAll);
 };

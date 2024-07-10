@@ -38,11 +38,10 @@ exports.getAllName = async (req, res) => {
 exports.addAll = async (req, res) => {
   try {
 
-    const backgroundData = data();
     const doc = new Background({
-      data: backgroundData[9],  //GUEST
-      description: "sunset Fishing profile",
-      name: "sunsetFishing",
+      data: 'data:image/webp;base64,',   //GUEST
+      description: "itachi",
+      name: "itachi",
       author: "Theanishtar"
     });
 
@@ -50,6 +49,21 @@ exports.addAll = async (req, res) => {
     const saveDoc = await doc.save();
 
     return res.json(saveDoc);
+  } catch (err) {
+    return res.json(err)
+  }
+};
+
+exports.deleteByName = async (req, res) => {
+  try {
+    const name = req.query['name'];
+    const bg = await Background.deleteOne({ name: name });
+
+    if (bg.deletedCount === 0) {
+      return res.status(404).json({ message: 'Model not found' });
+    }
+
+    return res.json({ message: 'Model deleted successfully', bg });
   } catch (err) {
     return res.json(err)
   }

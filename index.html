@@ -68,7 +68,7 @@
   </div>
 
   <script>
-    const baseURL = 'https://count-viewer.vercel.app/api'; // Base URL
+    const baseURL = 'http://localhost:8080/api'; // Base URL
 
     function showLoader() {
       document.getElementById('loader').style.display = 'block';
@@ -93,7 +93,7 @@
 
     async function fetchImageData(name, apiEndpoint) {
       try {
-        const response = await fetch(`${baseURL}/${apiEndpoint}/find?name=${name}`);
+        const response = await fetch(`${baseURL}/${apiEndpoint}?name=${name}`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
