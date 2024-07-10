@@ -24,7 +24,7 @@ exports.generateSVGString = (background, technical, streaks, view, additionalIma
 
   if (streaks.length != 0) {
     svgString += `
-      <image width="512" height="512" x="-18.153" y="2.38" style="" transform="matrix(0.027412, 0, 0, 0.027442, 81.743475, 2.7735)" xlink:href="${streaks[0].data}">
+      <image width="700" height="512" x="-18.153" y="2.38" style="" transform="matrix(0.027412, 0, 0, 0.027442, 81.743475, 2.7735)" xlink:href="${streaks[0].data}">
         <title>${streaks[0].name}</title>
       </image>
       <text style="fill: rgb(131, 235, 241); font-family: 'AR One Sans'; font-size: 28px; white-space: pre;" transform="matrix(0.337932, 0, 0, 0.337219, 99.962942, 14.705896)">123</text>`;
@@ -32,7 +32,7 @@ exports.generateSVGString = (background, technical, streaks, view, additionalIma
 
   if (view.length != 0) {
     svgString += `
-      <image width="13.29" height="13.29" x="147.405" y="4.613" style="" xlink:href="${view[0].data}">
+      <image width="12" height="13.29" x="147.405" y="4.613" style="" xlink:href="${view[0].data}">
         <title>${view[0].name}</title>
       </image>
       <text style="fill: rgb(131, 235, 241); font-family: 'AR One Sans'; font-size: 28px; white-space: pre;" transform="matrix(0.337932, 0, 0, 0.337219, 167.196057, 14.812479)">1233</text>`;
