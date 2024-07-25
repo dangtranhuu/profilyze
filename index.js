@@ -29,13 +29,37 @@ app.set('trust proxy', true); // Enable proxy trust
 //---------- CONFIG SERVER  ---------------------
 // set port, listen for requests
 const PORT = process.env.PORT || 5152;
+const redisPassword = process.env.REDIS_PASSWORD;
+const redisHost = process.env.REDIS_HOST;
+const redisPort = process.env.REDIS_PORT;
+const redisURI = `redis://:${redisPassword}@${redisHost}:${redisPort}`;
 const mongodbURI = process.env.MONGODB_URI;
 /*----------------------------------------------*/
 /**--------------------- DB CONNECTIONS -------------------------*/
-const connectionStatus = {
-  mongoDB: false
+// Kiểm tra giá trị của các biến môi trường
+console.log('REDIS_PASSWORD:', redisPassword);
+console.log('REDIS_HOST:', redisHost);
+console.log('REDIS_PORT:', redisPort);
+console.log('MONGODB_URI:', mongodbURI);
+if (!redisPassword || !redisHost || !redisPort) {
+  console.error('Missing one or more required Redis environment variables');
+  process.exit(1);
 }
 
+const connectionStatus = {
+  redis: false,
+  mongoDB: false
+}
+const redis = new Redis(redisURI); // Khởi tạo một đối tượng Redis
+// Kiểm tra trạng thái kết nối
+redis.on("connect", function () {
+  connectionStatus.redis = true;
+  console.log("Connected to Redis successfully!");
+});
+// Xử lý lỗi kết nối
+redis.on("error", function (error) {
+  console.error("Redis connection error:", error);
+});
 db.mongoose
   .connect(mongodbURI, {
     useNewUrlParser: true,
