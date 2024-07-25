@@ -6,7 +6,7 @@ exports.linkto = async (req, res) => {
     console.log('Referer:', referer);
 
     const doc = new Action({
-      referer: referer,  
+      referer: referer || "none",  
     });
 
 
