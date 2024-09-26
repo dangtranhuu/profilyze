@@ -1,4 +1,4 @@
-const controller = require("../controllers/blog.controller");
+const controller = require("../controllers/order.controller");
 
 module.exports = function (app, axios) {
   app.use(function (req, res, next) {
@@ -9,5 +9,6 @@ module.exports = function (app, axios) {
     next();
   });
 
-  app.get("/api/blog/view", controller.view);
+  // app.get("/api/auth/dangth", controller.dangth);
+  app.post("/api/v1/order", controller.orderProduct);
 };
