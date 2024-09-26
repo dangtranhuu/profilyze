@@ -41,25 +41,22 @@ console.log('REDIS_PASSWORD:', redisPassword);
 console.log('REDIS_HOST:', redisHost);
 console.log('REDIS_PORT:', redisPort);
 console.log('MONGODB_URI:', mongodbURI);
-if (!redisPassword || !redisHost || !redisPort) {
-  console.error('Missing one or more required Redis environment variables');
-  process.exit(1);
-}
+
 
 const connectionStatus = {
   redis: false,
   mongoDB: false
 }
-const redis = new Redis(redisURI); // Khởi tạo một đối tượng Redis
+// const redis = new Redis(redisURI); // Khởi tạo một đối tượng Redis
 // Kiểm tra trạng thái kết nối
-redis.on("connect", function () {
-  connectionStatus.redis = true;
-  console.log("Connected to Redis successfully!");
-});
+// redis.on("connect", function () {
+//   connectionStatus.redis = true;
+//   console.log("Connected to Redis successfully!");
+// });
 // Xử lý lỗi kết nối
-redis.on("error", function (error) {
-  console.error("Redis connection error:", error);
-});
+// redis.on("error", function (error) {
+//   console.error("Redis connection error:", error);
+// });
 db.mongoose
   .connect(mongodbURI, {
     useNewUrlParser: true,
@@ -83,13 +80,8 @@ app.get('/', (req, res) => {
 });
 
 
-require("./app/routes/countview.route")(app);
-require("./app/routes/github.route")(app, axios);
-require("./app/routes/blog.route")(app);
-require("./app/routes/auth.route")(app);
-require("./app/routes/technical.route")(app);
-require("./app/routes/background.route")(app);
-require("./app/routes/action.route")(app);
+require("./app/routes/product.route")(app);
+require("./app/routes/order.route")(app);
 
 //Thay vì sử dụng app.listen, sử dụng server.listen để sử dụng cùng một cổng cho cả express app và Socket.IO:
 server.listen(PORT, () => {
