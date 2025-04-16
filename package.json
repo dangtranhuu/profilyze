@@ -18,7 +18,7 @@
     "mongodb",
     "mongoose"
   ],
-  "author": "nghiaquach",
+  "author": "dangth.dev",
   "license": "ISC",
   "dependencies": {
     "@aws-sdk/client-s3": "^3.481.0",
@@ -36,7 +36,6 @@
     "formidable": "^3.5.1",
     "fs": "^0.0.1-security",
     "google-auth-library": "^9.4.1",
-    "html-template-tag": "^4.0.1",
     "ioredis": "^5.3.2",
     "ipware": "^2.0.0",
     "jsonwebtoken": "^9.0.0",

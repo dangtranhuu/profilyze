@@ -1,7 +1,6 @@
 const config = require("../config/auth.config");
 var jwt = require("jsonwebtoken");
 const axios = require('axios');
-const { html } = require('html-template-tag');
 const cheerio = require('cheerio');
 const fs = require('fs');
 const path = require('path');
