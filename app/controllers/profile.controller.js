@@ -3,8 +3,21 @@ const Technical = require("../models/techical.model");
 const Background = require("../models/background.model");
 const { generateSVGString } = require("../services/generateSVGString");
 
+const bannerCache = {}; // Simple RAM cache
+
 exports.banner = async (req, res) => {
   try {
+    const cacheKey = JSON.stringify(req.query);
+
+    // Check cache first
+    if (bannerCache[cacheKey] && (Date.now() - bannerCache[cacheKey].timestamp < 10 * 60 * 1000)) {
+      console.log('Banner cache hit');
+      res.set('Content-Type', 'image/svg+xml');
+      return res.send(bannerCache[cacheKey].svg);
+    }
+
+    console.log('Banner cache miss');
+
     const user = req.query['user'] || 'theanishtar';
     const streaks = await Technical.find({ name: req.query['streaks'] });
     const view = await Technical.find({ name: req.query['view'] });
@@ -30,6 +43,12 @@ exports.banner = async (req, res) => {
     }
 
     const svgString = generateSVGString(background, technical, streaks, view, skillArr);
+
+    // Save into cache
+    bannerCache[cacheKey] = {
+      svg: svgString,
+      timestamp: Date.now()
+    };
 
     res.set('Content-Type', 'image/svg+xml');
     res.send(svgString);
