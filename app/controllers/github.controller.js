@@ -5,10 +5,10 @@ const cheerio = require('cheerio');
 const fs = require('fs');
 const path = require('path');
 const Github = require("../models/github.model");
-const {bg_png, fire_png, sharingan_png} = require('../utils/base64/index');
+const { bg_png, fire_png, sharingan_png } = require('../utils/base64/index');
 const Technical = require("../models/techical.model");
 const Background = require("../models/background.model");
-const {generateSVGString} = require("../services/generateSVGString");
+const { generateSVGString } = require("../services/generateSVGString");
 
 
 function getClientIp(req) {
@@ -219,7 +219,7 @@ exports.profile = async (req, res) => {
       </image>
       <text style="fill: rgb(131, 235, 241); font-family: 'AR One Sans'; font-size: 28px; white-space: pre;" transform="matrix(0.337932, 0, 0, 0.337219, 167.196057, 14.812479)">${view_profile}</text>
       
-      ${template === 'frog' ? '<image width="48.282" height="36.213" x="26.213" y="35.564" style="" xlink:href="${frog_gif()}"> <title>Frog</title> </image>': '-->'}  
+      ${template === 'frog' ? '<image width="48.282" height="36.213" x="26.213" y="35.564" style="" xlink:href="${frog_gif()}"> <title>Frog</title> </image>' : '-->'}  
       
     </svg>`;
 
@@ -253,16 +253,16 @@ exports.contributes = async (req, res) => {
     const contributions = [];
     let total = [];
 
-    while (userCreateAtYear < currentYear+1) { 
-      if (yearView){
+    while (userCreateAtYear < currentYear + 1) {
+      if (yearView) {
         userCreateAtYear = yearView;
-        currentYear = yearView-1;
+        currentYear = yearView - 1;
       }
       let totalYearContribute = 0;
       let streak = 0;
       let streaks = 0;
       let ctbt = 0;
-      
+
       const contributeUrl = `https://github.com/users/${user}/contributions?tab=overview&from=${userCreateAtYear}-01-01&to=${userCreateAtYear}-12-31`;
       const resContributionAtYear = await axios.get(contributeUrl);
 
@@ -270,7 +270,7 @@ exports.contributes = async (req, res) => {
       const $ = cheerio.load(resContributionAtYear.data);
 
       // Lặp qua tất cả các thẻ <td> có thuộc tính data-level và tìm các thẻ <tool-tip> tương ứng
-      $('td[data-level]').each(function() {
+      $('td[data-level]').each(function () {
         const td = $(this);
         const tooltipId = td.attr('id');
         const tooltip = $(`tool-tip[for="${tooltipId}"]`);
@@ -284,7 +284,7 @@ exports.contributes = async (req, res) => {
       const modifiedHtml = $.html();
 
       // Duyệt qua từng thẻ <td> có thuộc tính data-date và tooltip-content
-      $('td[data-date][data-level] .tooltip-content').each(function(index, element) {
+      $('td[data-date][data-level] .tooltip-content').each(function (index, element) {
         const td = $(this).parent(); // Lấy phần tử <td> bao quanh .tooltip-content
         const date = td.attr('data-date');
         const contribute = $(this).text().trim();
@@ -300,12 +300,12 @@ exports.contributes = async (req, res) => {
         // }
 
         // Đẩy dữ liệu vào mảng kết quả
-          contributions.push({
-            date: date,
-            contribute: contribute,
-            'data-level': parseInt(dataLevel),
-            contributes: getContributions(contribute)
-          });
+        contributions.push({
+          date: date,
+          contribute: contribute,
+          'data-level': parseInt(dataLevel),
+          contributes: getContributions(contribute)
+        });
 
         ctbt += getContributions(contribute);
       });
@@ -318,11 +318,11 @@ exports.contributes = async (req, res) => {
       userCreateAtYear++;
     }
 
-  contributions.sort((a, b) => {
-    const dateA = new Date(a.date);
-    const dateB = new Date(b.date);
-    return dateA - dateB;
-  });
+    contributions.sort((a, b) => {
+      const dateA = new Date(a.date);
+      const dateB = new Date(b.date);
+      return dateA - dateB;
+    });
 
     // Send the SVG string as the response
     res.json({
@@ -341,14 +341,14 @@ function getContributions(contributionString) {
   const contributionMatch = contributionString.match(/(\d+) contribution/);
 
   if (contributionMatch) {
-      // Trích xuất số lượng đóng góp và chuyển đổi thành số nguyên
-      return parseInt(contributionMatch[1], 10);
+    // Trích xuất số lượng đóng góp và chuyển đổi thành số nguyên
+    return parseInt(contributionMatch[1], 10);
   } else if (contributionString.includes("No contributions")) {
-      // Trả về 0 nếu không có đóng góp
-      return 0;
+    // Trả về 0 nếu không có đóng góp
+    return 0;
   } else {
-      // Trường hợp khác, có thể xử lý hoặc trả về giá trị mặc định
-      return 0;
+    // Trường hợp khác, có thể xử lý hoặc trả về giá trị mặc định
+    return 0;
   }
 }
 
@@ -358,10 +358,10 @@ exports.banner = async (req, res) => {
     const name = req.query['name'] || 'TRAN HUU DANG';
     const description = req.query['description'] || 'Fullstack developer';
     const template = req.query['template'] || `basic`;
-    const streaks = await Technical.find({name: req.query['streaks']}); 
-    const view = await Technical.find({name: req.query['view']}); 
-    const technical = await Technical.find({name: req.query['tech'] || 'java'});
-    let background = await Background.find({name: req.query['background']});
+    const streaks = await Technical.find({ name: req.query['streaks'] });
+    const view = await Technical.find({ name: req.query['view'] });
+    const technical = await Technical.find({ name: req.query['tech'] || 'java' });
+    let background = await Background.find({ name: req.query['background'] });
     const skills = req.query.skills ? req.query.skills.split(',') : []; //api/technical/images?skills=github,nodejs,reactjs
 
     if (background.length == 0)
@@ -377,7 +377,7 @@ exports.banner = async (req, res) => {
         });
       }
     }
-    
+
 
     const svgString = generateSVGString(background, technical, streaks, view, skillArr);
 
@@ -392,7 +392,7 @@ exports.banner = async (req, res) => {
 
 exports.bannerView = async (req, res) => {
   try {
-    const images = data(); 
+    const images = data();
     // Trả về file HTML
     // res.sendFile(path.join(__dirname, '..', 'public', 'banner.html'));
     res.render('banner', { images });

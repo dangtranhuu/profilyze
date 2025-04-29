@@ -50,16 +50,17 @@ const connectionStatus = {
   redis: false,
   mongoDB: false
 }
-const redis = new Redis(redisURI); // Khởi tạo một đối tượng Redis
-// Kiểm tra trạng thái kết nối
+
+/* REDIS CONFIG
+const redis = new Redis(redisURI);
 redis.on("connect", function () {
   connectionStatus.redis = true;
   console.log("Connected to Redis successfully!");
 });
-// Xử lý lỗi kết nối
 redis.on("error", function (error) {
   console.error("Redis connection error:", error);
 });
+*/
 db.mongoose
   .connect(mongodbURI, {
     useNewUrlParser: true,
@@ -83,13 +84,14 @@ app.get('/', (req, res) => {
 });
 
 
-require("./app/routes/countview.route")(app);
-require("./app/routes/github.route")(app, axios);
-require("./app/routes/blog.route")(app);
-require("./app/routes/auth.route")(app);
-require("./app/routes/technical.route")(app);
-require("./app/routes/background.route")(app);
-require("./app/routes/action.route")(app);
+// require("./app/routes/countview.route")(app);
+// require("./app/routes/github.route")(app, axios);
+// require("./app/routes/blog.route")(app);
+// require("./app/routes/auth.route")(app);
+// require("./app/routes/technical.route")(app);
+// require("./app/routes/background.route")(app);
+// require("./app/routes/action.route")(app);
+require("./app/routes/profile.route")(app);
 
 //Thay vì sử dụng app.listen, sử dụng server.listen để sử dụng cùng một cổng cho cả express app và Socket.IO:
 server.listen(PORT, () => {
