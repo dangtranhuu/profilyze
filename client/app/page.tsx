@@ -3,6 +3,8 @@
 import { useState } from "react";
 
 type FormState = {
+  name: string;
+  role: string;
   background: string;
   tech: string;
   streaks: string;
@@ -17,6 +19,8 @@ const backgrounds = [
 
 export default function Home() {
   const [form, setForm] = useState<FormState>({
+    name: "TRAN HUU DANG",
+    role: "FULLSTACK DEVELOPER",
     background: "itachi1",
     tech: "java",
     streaks: "fire",
@@ -64,6 +68,31 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Form Section */}
           <div className="space-y-4">
+            {/* Name */}
+            <div>
+              <label className="block font-semibold mb-1">Name</label>
+              <input
+                type="text"
+                name="name"
+                value={form.name}
+                onChange={handleChange}
+                placeholder="Your name"
+                className="w-full border rounded px-4 py-3 text-lg"
+              />
+            </div>
+
+            {/* Role */}
+            <div>
+              <label className="block font-semibold mb-1">Role</label>
+              <input
+                type="text"
+                name="role"
+                value={form.role}
+                onChange={handleChange}
+                placeholder="Frontend Developer / Designer / etc."
+                className="w-full border rounded px-4 py-3 text-lg"
+              />
+            </div>
             {/* Background */}
             <div>
               <label className="block font-semibold mb-1">Background</label>

@@ -1,5 +1,5 @@
 // Tạo hàm tạo chuỗi SVG động và xuất hàm này
-exports.generateSVGString = (background, technical, streaks, view, additionalImages) => {
+exports.generateSVGString = (name, role, background, technical, streaks, view, additionalImages) => {
   let svgString = `<?xml version="1.0" encoding="utf-8"?>
     <svg viewBox="-1.672 0 501.672 108.732" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:bx="https://boxy-svg.com">
       <defs>
@@ -14,8 +14,8 @@ exports.generateSVGString = (background, technical, streaks, view, additionalIma
       </image>
 
       <text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 28px;" transform="matrix(0.536962, 0, 0, 0.536965, 84.994726, 73.421301)"> </text>
-      <text style="fill: rgb(255, 255, 255); font-family: Allerta; font-size: 28px; font-weight: 700; white-space: pre;" transform="matrix(1.226279, 0, 0, 1.28091, 81.830961, 66.402548)">TRAN HUU DANG</text>
-      <text style="fill: rgb(131, 235, 241); font-family: 'AR One Sans'; font-size: 28px; white-space: pre;" transform="matrix(0.526322, 0, 0, 0.431086, 91.022329, 95.153448)">FULLSTACK DEVELOPER</text>
+      <text style="fill: rgb(255, 255, 255); font-family: Allerta; font-size: 28px; font-weight: 700; white-space: pre;" transform="matrix(1.226279, 0, 0, 1.28091, 81.830961, 66.402548)">${name}</text>
+      <text style="fill: rgb(131, 235, 241); font-family: 'AR One Sans'; font-size: 28px; white-space: pre;" transform="matrix(0.526322, 0, 0, 0.431086, 91.022329, 95.153448)">${role}</text>
 
       <!-- Skill logo -->
       <image width="60.6" height="86.945" x="432.735" y="26.78" style="" xlink:href="${technical[0].data}">

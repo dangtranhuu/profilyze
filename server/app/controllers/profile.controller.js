@@ -18,7 +18,8 @@ exports.banner = async (req, res) => {
 
     console.log('Banner cache miss');
 
-    const user = req.query['user'] || 'theanishtar';
+    const name = req.query['name'] || 'theanishtar';
+    const role = req.query['role'] || 'FULLSTACK DEVELOPER';
     const streaks = await Technical.find({ name: req.query['streaks'] });
     const view = await Technical.find({ name: req.query['view'] });
     const technical = await Technical.find({ name: req.query['tech'] || 'java' });
@@ -42,7 +43,7 @@ exports.banner = async (req, res) => {
       }
     }
 
-    const svgString = generateSVGString(background, technical, streaks, view, skillArr);
+    const svgString = generateSVGString(name, role, background, technical, streaks, view, skillArr);
 
     // Save into cache
     bannerCache[cacheKey] = {
