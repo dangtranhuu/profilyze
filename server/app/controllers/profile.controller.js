@@ -2,6 +2,8 @@ const { bg_png } = require('../utils/base64/index');
 const Technical = require("../models/techical.model");
 const Background = require("../models/background.model");
 const { generateSVGString } = require("../services/generateSVGString");
+const axios = require('axios');
+
 
 const bannerCache = {}; // Simple RAM cache
 
@@ -23,8 +25,32 @@ exports.banner = async (req, res) => {
     const streaks = await Technical.find({ name: req.query['streaks'] });
     const view = await Technical.find({ name: req.query['view'] });
     const technical = await Technical.find({ name: req.query['tech'] || 'java' });
-    let background = await Background.find({ name: req.query['background'] });
+    // let background = await Background.find({ name: req.query['background'] });
     const skills = req.query.skills ? req.query.skills.split(',') : [];
+
+    let background = [];
+    const bgParam = req.query['background'];
+    if (bgParam?.startsWith('embed:')) {
+      const url = bgParam.replace('embed:', '');
+
+      try {
+        const response = await axios.get(url);
+        background = [{
+          name: 'custom',
+          data: `data:image/svg+xml;base64,${Buffer.from(response.data).toString('base64')}`
+        }];
+
+        console.log(background.data)
+      } catch (e) {
+        console.error('Error fetching embedded background:', e.message);
+        background = bg_png(); // fallback
+      }
+    } else {
+      background = await Background.find({ name: bgParam });
+      if (!background.length) background = bg_png();
+    }
+
+
 
     if (!background.length)
       background = bg_png();
