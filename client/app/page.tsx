@@ -15,8 +15,6 @@ const backgrounds = [
   "itasasu", "minato", "itachi1", "itachi5", "minato1", "itachi6", "itachi2", "itachi4"
 ];
 
-
-
 export default function Home() {
   const [form, setForm] = useState<FormState>({
     background: "itachi1",
@@ -52,70 +50,97 @@ export default function Home() {
     setPreviewUrl(fullUrl);
   };
 
+  const copyUrl = () => {
+    navigator.clipboard.writeText(url);
+  };
+
   return (
-    <div style={{ padding: "2rem", fontFamily: "Arial" }}>
-      <h1>🎨 Banner Generator</h1>
+    <main className="min-h-screen bg-gray-50 px-6 py-10 text-gray-800">
+      <div className="max-w-6xl mx-auto">
+        <h1 className="text-4xl font-extrabold text-indigo-700 mb-8">
+          🎨 Banner Generator
+        </h1>
 
-      <div style={{ marginBottom: "1rem" }}>
-        {/* Background select */}
-        <div style={{ marginBottom: "0.5rem" }}>
-          <label style={{ display: "block", marginBottom: "0.2rem" }}>
-            background
-          </label>
-          <select
-            name="background"
-            value={form.background}
-            onChange={handleChange}
-            style={{ width: "100%", padding: "0.5rem" }}
-          >
-            {backgrounds.map((bg) => (
-              <option key={bg} value={bg}>
-                {bg}
-              </option>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Form Section */}
+          <div className="space-y-4">
+            {/* Background */}
+            <div>
+              <label className="block font-semibold mb-1">Background</label>
+              <select
+                name="background"
+                value={form.background}
+                onChange={handleChange}
+                className="w-full border rounded px-3 py-2"
+              >
+                {backgrounds.map((bg) => (
+                  <option key={bg} value={bg}>
+                    {bg}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Other Inputs */}
+            {(["tech", "streaks", "view", "skills"] as (keyof FormState)[]).map((field) => (
+              <div key={field}>
+                <label className="block font-semibold mb-1 capitalize">{field}</label>
+                <input
+                  type="text"
+                  name={field}
+                  value={form[field]}
+                  onChange={handleChange}
+                  placeholder={`Enter ${field}`}
+                  className="w-full border rounded px-3 py-2"
+                />
+              </div>
             ))}
-          </select>
+
+            {/* Buttons */}
+            <div className="flex flex-col md:flex-row gap-4 pt-2">
+              <button
+                onClick={generateUrl}
+                className="bg-indigo-600 text-white px-5 py-2 rounded hover:bg-indigo-700 transition w-full md:w-auto"
+              >
+                Generate Banner
+              </button>
+              {url && (
+                <button
+                  onClick={copyUrl}
+                  className="bg-gray-200 text-gray-800 px-5 py-2 rounded hover:bg-gray-300 transition w-full md:w-auto"
+                >
+                  📋 Copy URL
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Preview Section */}
+          <div className="space-y-4">
+            {url && (
+              <>
+                <div>
+                  <h2 className="text-lg font-semibold mb-1">🔗 URL</h2>
+                  <div className="bg-gray-100 p-3 rounded break-all text-sm border">
+                    {url}
+                  </div>
+                </div>
+
+                <div>
+                  <h2 className="text-lg font-semibold mb-1">🖼️ Preview</h2>
+                  <div className="border border-dashed border-gray-400 rounded p-3 bg-white">
+                    <img
+                      src={previewUrl}
+                      alt="Banner Preview"
+                      className="w-full max-h-[300px] object-contain rounded"
+                    />
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
         </div>
-
-        {/* Other text fields */}
-        {(["tech", "streaks", "view", "skills"] as (keyof FormState)[]).map((field) => (
-          <div key={field} style={{ marginBottom: "0.5rem" }}>
-            <label style={{ display: "block", marginBottom: "0.2rem" }}>{field}</label>
-            <input
-              type="text"
-              name={field}
-              value={form[field]}
-              onChange={handleChange}
-              placeholder={`Enter ${field}`}
-              style={{ width: "100%", padding: "0.5rem" }}
-            />
-          </div>
-        ))}
-
-        <button
-          onClick={generateUrl}
-          style={{ padding: "0.5rem 1rem", marginTop: "1rem" }}
-        >
-          Generate Banner
-        </button>
       </div>
-
-      {url && (
-        <>
-          <h3>🔗 URL:</h3>
-          <code style={{ display: "block", marginBottom: "1rem" }}>{url}</code>
-
-          <h3>🖼️ Preview:</h3>
-          <div
-            style={{
-              border: "1px solid #ccc",
-              padding: "1rem",
-              marginTop: "0.5rem",
-            }}
-          >
-            <img src={previewUrl} alt="Banner Preview" style={{ width: "100%" }} />
-          </div>
-        </>
-      )}
-    </div>
+    </main>
   );
 }
