@@ -17,6 +17,13 @@ const backgrounds = [
   "itasasu", "minato", "itachi1", "itachi5", "minato1", "itachi6", "itachi2", "itachi4"
 ];
 
+// ... phần đầu giữ nguyên như bạn đã gửi
+
+const techOptions = [
+  "java", "reactjs", "vsc", "github", "nodejs",
+  "js", "vuejs", "python", "angular", "java-gif", "gopher"
+];
+
 export default function Home() {
   const [form, setForm] = useState<FormState>({
     name: "TRAN HUU DANG",
@@ -76,8 +83,7 @@ export default function Home() {
                 name="name"
                 value={form.name}
                 onChange={handleChange}
-                placeholder="Your name"
-                className="w-full border rounded px-4 py-3 text-lg"
+                className="w-full border rounded px-3 py-2"
               />
             </div>
 
@@ -89,10 +95,10 @@ export default function Home() {
                 name="role"
                 value={form.role}
                 onChange={handleChange}
-                placeholder="Frontend Developer / Designer / etc."
-                className="w-full border rounded px-4 py-3 text-lg"
+                className="w-full border rounded px-3 py-2"
               />
             </div>
+
             {/* Background */}
             <div>
               <label className="block font-semibold mb-1">Background</label>
@@ -110,8 +116,25 @@ export default function Home() {
               </select>
             </div>
 
-            {/* Other Inputs */}
-            {(["tech", "streaks", "view", "skills"] as (keyof FormState)[]).map((field) => (
+            {/* Tech as Select */}
+            <div>
+              <label className="block font-semibold mb-1">Tech</label>
+              <select
+                name="tech"
+                value={form.tech}
+                onChange={handleChange}
+                className="w-full border rounded px-3 py-2"
+              >
+                {techOptions.map((tech) => (
+                  <option key={tech} value={tech}>
+                    {tech}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Other Inputs (streaks, view, skills) */}
+            {(["streaks", "view", "skills"] as (keyof FormState)[]).map((field) => (
               <div key={field}>
                 <label className="block font-semibold mb-1 capitalize">{field}</label>
                 <input
@@ -119,7 +142,6 @@ export default function Home() {
                   name={field}
                   value={form[field]}
                   onChange={handleChange}
-                  placeholder={`Enter ${field}`}
                   className="w-full border rounded px-3 py-2"
                 />
               </div>
