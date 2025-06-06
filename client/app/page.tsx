@@ -2,6 +2,13 @@
 
 import { useEffect, useState } from "react";
 import Select from "react-select";
+import {
+  FaGithub,
+  FaDiscord,
+  FaYoutube,
+  FaTiktok,
+  FaGlobe
+} from "react-icons/fa";
 
 type FormState = {
   name: string;
@@ -223,12 +230,33 @@ export default function Home() {
                     <code className="block">{"![Banner Profile](" + url + ")"}</code>
                   </div>
                 </div>
-
-
               </>
             )}
           </div>
         </div>
+
+        <footer className="mt-12 pt-8 border-t text-sm text-gray-600 text-center">
+          <p className="mb-4 font-medium">Made with ❤️ by TRAN HUU DANG</p>
+          <div className="flex flex-wrap justify-center items-center gap-6 text-2xl text-gray-500 mb-4">
+            <a href="https://github.com/dangtranhuu/profilyze" target="_blank" rel="noopener noreferrer" title="GitHub">
+              <FaGithub />
+            </a>
+            <a href="https://dangth.dev" target="_blank" rel="noopener noreferrer" title="Portfolio">
+              <FaGlobe />
+            </a>
+            <a href="https://discord.com/invite/MxmYrMrJA6" target="_blank" rel="noopener noreferrer" title="Discord">
+              <FaDiscord />
+            </a>
+            <a href="https://www.youtube.com/@devlands" target="_blank" rel="noopener noreferrer" title="YouTube">
+              <FaYoutube />
+            </a>
+            <a href="https://www.tiktok.com/@theanishtar" target="_blank" rel="noopener noreferrer" title="TikTok">
+              <FaTiktok />
+            </a>
+          </div>
+          <p>© {new Date().getFullYear()} Profilyze. All rights reserved.</p>
+        </footer>
+
       </div>
     </main>
   );
