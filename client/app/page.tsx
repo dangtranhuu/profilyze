@@ -10,6 +10,11 @@ import {
   FaGlobe
 } from "react-icons/fa";
 
+type SkillOption = {
+  label: string;
+  value: string;
+};
+
 type FormState = {
   name: string;
   role: string;
@@ -30,10 +35,11 @@ const techOptions = [
   "js", "vuejs", "python", "angular", "java-gif", "gopher"
 ];
 
-const skillOptions = techOptions.map(skill => ({
+const skillOptions: SkillOption[] = techOptions.map(skill => ({
   value: skill,
   label: skill.toUpperCase(),
 }));
+
 
 export default function Home() {
   const [form, setForm] = useState<FormState>({
@@ -61,8 +67,8 @@ export default function Home() {
     setForm(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSkillsChange = (selected: any) => {
-    const values = selected.map((opt: any) => opt.value).join(",");
+  const handleSkillsChange = (selected: readonly SkillOption[] | null) => {
+    const values = selected?.map(opt => opt.value).join(",") ?? "";
     setForm(prev => ({ ...prev, skills: values }));
   };
 
@@ -175,8 +181,10 @@ export default function Home() {
                   form.skills.split(",").includes(opt.value)
                 )}
                 onChange={handleSkillsChange}
+                className="text-sm"
               />
             </div>
+
 
             <div className="flex flex-col md:flex-row gap-4 pt-2">
               <button
