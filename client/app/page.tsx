@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Select from "react-select";
 
 type FormState = {
   name: string;
@@ -9,7 +10,7 @@ type FormState = {
   tech: string;
   streaks: string;
   view: string;
-  skills: string;
+  skills: string; // Chuỗi skills, backend nhận dạng "vuejs,reactjs,..."
 };
 
 const backgrounds = [
@@ -17,12 +18,15 @@ const backgrounds = [
   "itasasu", "minato", "itachi1", "itachi5", "minato1", "itachi6", "itachi2", "itachi4"
 ];
 
-// ... phần đầu giữ nguyên như bạn đã gửi
-
 const techOptions = [
   "java", "reactjs", "vsc", "github", "nodejs",
   "js", "vuejs", "python", "angular", "java-gif", "gopher"
 ];
+
+const skillOptions = techOptions.map(skill => ({
+  value: skill,
+  label: skill.toUpperCase(),
+}));
 
 export default function Home() {
   const [form, setForm] = useState<FormState>({
@@ -42,10 +46,15 @@ export default function Home() {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-    setForm((prev) => ({
+    setForm(prev => ({
       ...prev,
       [name]: value,
     }));
+  };
+
+  const handleSkillsChange = (selected: any) => {
+    const values = selected.map((opt: any) => opt.value).join(",");
+    setForm(prev => ({ ...prev, skills: values }));
   };
 
   const generateUrl = () => {
@@ -75,7 +84,6 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Form Section */}
           <div className="space-y-4">
-            {/* Name */}
             <div>
               <label className="block font-semibold mb-1">Name</label>
               <input
@@ -87,7 +95,6 @@ export default function Home() {
               />
             </div>
 
-            {/* Role */}
             <div>
               <label className="block font-semibold mb-1">Role</label>
               <input
@@ -99,7 +106,6 @@ export default function Home() {
               />
             </div>
 
-            {/* Background */}
             <div>
               <label className="block font-semibold mb-1">Background</label>
               <select
@@ -116,7 +122,6 @@ export default function Home() {
               </select>
             </div>
 
-            {/* Tech as Select */}
             <div>
               <label className="block font-semibold mb-1">Tech</label>
               <select
@@ -133,21 +138,40 @@ export default function Home() {
               </select>
             </div>
 
-            {/* Other Inputs (streaks, view, skills) */}
-            {(["streaks", "view", "skills"] as (keyof FormState)[]).map((field) => (
-              <div key={field}>
-                <label className="block font-semibold mb-1 capitalize">{field}</label>
-                <input
-                  type="text"
-                  name={field}
-                  value={form[field]}
-                  onChange={handleChange}
-                  className="w-full border rounded px-3 py-2"
-                />
-              </div>
-            ))}
+            <div>
+              <label className="block font-semibold mb-1">Streaks</label>
+              <input
+                type="text"
+                name="streaks"
+                value={form.streaks}
+                onChange={handleChange}
+                className="w-full border rounded px-3 py-2"
+              />
+            </div>
 
-            {/* Buttons */}
+            <div>
+              <label className="block font-semibold mb-1">View</label>
+              <input
+                type="text"
+                name="view"
+                value={form.view}
+                onChange={handleChange}
+                className="w-full border rounded px-3 py-2"
+              />
+            </div>
+
+            <div>
+              <label className="block font-semibold mb-1">Skills</label>
+              <Select
+                isMulti
+                options={skillOptions}
+                value={skillOptions.filter(opt =>
+                  form.skills.split(",").includes(opt.value)
+                )}
+                onChange={handleSkillsChange}
+              />
+            </div>
+
             <div className="flex flex-col md:flex-row gap-4 pt-2">
               <button
                 onClick={generateUrl}
