@@ -179,14 +179,7 @@ export default function Home() {
               >
                 Generate Banner
               </button>
-              {url && (
-                <button
-                  onClick={copyUrl}
-                  className="bg-gray-200 text-gray-800 px-5 py-2 rounded hover:bg-gray-300 transition w-full md:w-auto"
-                >
-                  📋 Copy URL
-                </button>
-              )}
+
             </div>
           </div>
 
@@ -211,6 +204,14 @@ export default function Home() {
                     />
                   </div>
                 </div>
+                {url && (
+                  <button
+                    onClick={copyUrl}
+                    className="bg-gray-200 text-gray-800 px-5 py-2 rounded hover:bg-gray-300 transition w-full md:w-auto"
+                  >
+                    📋 Copy URL
+                  </button>
+                )}
               </>
             )}
           </div>
