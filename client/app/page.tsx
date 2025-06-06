@@ -216,6 +216,15 @@ export default function Home() {
                     )}
                   </div>
                 </div>
+
+                <div>
+                  <h2 className="text-lg font-semibold mb-1">Using at GitHub README.md</h2>
+                  <div className="bg-gray-100 p-3 rounded text-sm border overflow-x-auto whitespace-pre-wrap break-words max-w-full">
+                    <code className="block">{"![Banner Profile](" + url + ")"}</code>
+                  </div>
+                </div>
+
+
               </>
             )}
           </div>
