@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Select from "react-select";
 
 type FormState = {
@@ -10,7 +10,7 @@ type FormState = {
   tech: string;
   streaks: string;
   view: string;
-  skills: string; // Chuỗi skills, backend nhận dạng "vuejs,reactjs,..."
+  skills: string;
 };
 
 const backgrounds = [
@@ -41,15 +41,17 @@ export default function Home() {
 
   const [url, setUrl] = useState("");
   const [previewUrl, setPreviewUrl] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    generateUrl(); // Load initial preview
+  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-    setForm(prev => ({
-      ...prev,
-      [name]: value,
-    }));
+    setForm(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSkillsChange = (selected: any) => {
@@ -58,6 +60,7 @@ export default function Home() {
   };
 
   const generateUrl = () => {
+    setIsLoading(true);
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL + "/api/profile/banner";
     const params = new URLSearchParams();
 
@@ -67,7 +70,12 @@ export default function Home() {
 
     const fullUrl = `${baseUrl}?${params.toString()}`;
     setUrl(fullUrl);
-    setPreviewUrl(fullUrl);
+    setPreviewUrl(""); // Clear current preview to show skeleton
+    // Simulate loading
+    setTimeout(() => {
+      setPreviewUrl(fullUrl);
+      setIsLoading(false);
+    }, 1200);
   };
 
   const copyUrl = () => {
@@ -84,27 +92,18 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Form Section */}
           <div className="space-y-4">
-            <div>
-              <label className="block font-semibold mb-1">Name</label>
-              <input
-                type="text"
-                name="name"
-                value={form.name}
-                onChange={handleChange}
-                className="w-full border rounded px-3 py-2"
-              />
-            </div>
-
-            <div>
-              <label className="block font-semibold mb-1">Role</label>
-              <input
-                type="text"
-                name="role"
-                value={form.role}
-                onChange={handleChange}
-                className="w-full border rounded px-3 py-2"
-              />
-            </div>
+            {["name", "role"].map((field) => (
+              <div key={field}>
+                <label className="block font-semibold mb-1 capitalize">{field}</label>
+                <input
+                  type="text"
+                  name={field}
+                  value={(form as any)[field]}
+                  onChange={handleChange}
+                  className="w-full border rounded px-3 py-2"
+                />
+              </div>
+            ))}
 
             <div>
               <label className="block font-semibold mb-1">Background</label>
@@ -114,7 +113,7 @@ export default function Home() {
                 onChange={handleChange}
                 className="w-full border rounded px-3 py-2"
               >
-                {backgrounds.map((bg) => (
+                {backgrounds.map(bg => (
                   <option key={bg} value={bg}>
                     {bg}
                   </option>
@@ -130,7 +129,7 @@ export default function Home() {
                 onChange={handleChange}
                 className="w-full border rounded px-3 py-2"
               >
-                {techOptions.map((tech) => (
+                {techOptions.map(tech => (
                   <option key={tech} value={tech}>
                     {tech}
                   </option>
@@ -179,7 +178,14 @@ export default function Home() {
               >
                 Generate Banner
               </button>
-
+              {url && (
+                <button
+                  onClick={copyUrl}
+                  className="bg-gray-200 text-gray-800 px-5 py-2 rounded hover:bg-gray-300 transition w-full md:w-auto"
+                >
+                  📋 Copy URL
+                </button>
+              )}
             </div>
           </div>
 
@@ -196,22 +202,20 @@ export default function Home() {
 
                 <div>
                   <h2 className="text-lg font-semibold mb-1">🖼️ Preview</h2>
-                  <div className="border border-dashed border-gray-400 rounded p-3 bg-white">
-                    <img
-                      src={previewUrl}
-                      alt="Banner Preview"
-                      className="w-full max-h-[300px] object-contain rounded"
-                    />
+                  <div className="border border-dashed border-gray-400 rounded p-3 bg-white min-h-[200px] flex items-center justify-center">
+                    {isLoading ? (
+                      <div className="animate-pulse w-full h-[120px] bg-gray-200 rounded" />
+                    ) : (
+                      previewUrl && (
+                        <img
+                          src={previewUrl}
+                          alt="Banner Preview"
+                          className="w-full max-h-[300px] object-contain rounded"
+                        />
+                      )
+                    )}
                   </div>
                 </div>
-                {url && (
-                  <button
-                    onClick={copyUrl}
-                    className="bg-gray-200 text-gray-800 px-5 py-2 rounded hover:bg-gray-300 transition w-full md:w-auto"
-                  >
-                    📋 Copy URL
-                  </button>
-                )}
               </>
             )}
           </div>
