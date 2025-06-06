@@ -40,7 +40,6 @@ const skillOptions: SkillOption[] = techOptions.map(skill => ({
   label: skill.toUpperCase(),
 }));
 
-
 export default function Home() {
   const [form, setForm] = useState<FormState>({
     name: "TRAN HUU DANG",
@@ -55,6 +54,9 @@ export default function Home() {
   const [url, setUrl] = useState("");
   const [previewUrl, setPreviewUrl] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  const [backgroundType, setBackgroundType] = useState<"default" | "embed">("default");
+  const [customBackgroundUrl, setCustomBackgroundUrl] = useState("");
 
   useEffect(() => {
     generateUrl(); // Load initial preview
@@ -84,7 +86,6 @@ export default function Home() {
     const fullUrl = `${baseUrl}?${params.toString()}`;
     setUrl(fullUrl);
     setPreviewUrl(""); // Clear current preview to show skeleton
-    // Simulate loading
     setTimeout(() => {
       setPreviewUrl(fullUrl);
       setIsLoading(false);
@@ -105,44 +106,77 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Form Section */}
           <div className="space-y-4">
-            <div>
-              <label className="block font-semibold mb-1">Name</label>
-              <input
-                type="text"
-                name="name"
-                value={form.name}
-                onChange={handleChange}
-                className="w-full border rounded px-3 py-2"
-              />
-            </div>
+            {["name", "role"].map((field) => (
+              <div key={field}>
+                <label className="block font-semibold mb-1 capitalize">{field}</label>
+                <input
+                  type="text"
+                  name={field}
+                  value={(form as any)[field]}
+                  onChange={handleChange}
+                  className="w-full border rounded px-3 py-2"
+                />
+              </div>
+            ))}
 
+            {/* Background Type */}
             <div>
-              <label className="block font-semibold mb-1">Role</label>
-              <input
-                type="text"
-                name="role"
-                value={form.role}
-                onChange={handleChange}
-                className="w-full border rounded px-3 py-2"
-              />
-            </div>
-
-            <div>
-              <label className="block font-semibold mb-1">Background</label>
+              <label className="block font-semibold mb-1">Background Type</label>
               <select
-                name="background"
-                value={form.background}
-                onChange={handleChange}
+                value={backgroundType}
+                onChange={(e) => {
+                  const value = e.target.value as "default" | "embed";
+                  setBackgroundType(value);
+                  setForm(prev => ({
+                    ...prev,
+                    background: value === "embed" ? `embed:${customBackgroundUrl}` : backgrounds[0]
+                  }));
+                }}
                 className="w-full border rounded px-3 py-2"
               >
-                {backgrounds.map(bg => (
-                  <option key={bg} value={bg}>
-                    {bg}
-                  </option>
-                ))}
+                <option value="default">Choose from List</option>
+                <option value="embed">Custom Embed URL</option>
               </select>
             </div>
 
+            {/* Background Input/Select */}
+            {backgroundType === "default" ? (
+              <div>
+                <label className="block font-semibold mb-1">Background</label>
+                <select
+                  name="background"
+                  value={form.background}
+                  onChange={handleChange}
+                  className="w-full border rounded px-3 py-2"
+                >
+                  {backgrounds.map(bg => (
+                    <option key={bg} value={bg}>
+                      {bg}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            ) : (
+              <div>
+                <label className="block font-semibold mb-1">Embed SVG URL</label>
+                <input
+                  type="text"
+                  placeholder="https://raw.githubusercontent.com/..."
+                  value={customBackgroundUrl}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setCustomBackgroundUrl(value);
+                    setForm(prev => ({
+                      ...prev,
+                      background: `embed:${value}`
+                    }));
+                  }}
+                  className="w-full border rounded px-3 py-2"
+                />
+              </div>
+            )}
+
+            {/* Tech */}
             <div>
               <label className="block font-semibold mb-1">Tech</label>
               <select
@@ -159,28 +193,21 @@ export default function Home() {
               </select>
             </div>
 
-            <div>
-              <label className="block font-semibold mb-1">Streaks</label>
-              <input
-                type="text"
-                name="streaks"
-                value={form.streaks}
-                onChange={handleChange}
-                className="w-full border rounded px-3 py-2"
-              />
-            </div>
+            {/* Streaks & View */}
+            {["streaks", "view"].map((field) => (
+              <div key={field}>
+                <label className="block font-semibold mb-1 capitalize">{field}</label>
+                <input
+                  type="text"
+                  name={field}
+                  value={(form as any)[field]}
+                  onChange={handleChange}
+                  className="w-full border rounded px-3 py-2"
+                />
+              </div>
+            ))}
 
-            <div>
-              <label className="block font-semibold mb-1">View</label>
-              <input
-                type="text"
-                name="view"
-                value={form.view}
-                onChange={handleChange}
-                className="w-full border rounded px-3 py-2"
-              />
-            </div>
-
+            {/* Skills */}
             <div>
               <label className="block font-semibold mb-1">Skills</label>
               <Select
@@ -193,7 +220,6 @@ export default function Home() {
                 className="text-sm"
               />
             </div>
-
 
             <div className="flex flex-col md:flex-row gap-4 pt-2">
               <button
@@ -273,7 +299,6 @@ export default function Home() {
           </div>
           <p>© {new Date().getFullYear()} Profilyze. All rights reserved.</p>
         </footer>
-
       </div>
     </main>
   );

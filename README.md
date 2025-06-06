@@ -2,6 +2,12 @@
 
 A modern tool to generate customizable **developer profile banners** using an Express.js API and a sleek Next.js frontend.
 
+### using list background
+![](./banner.png)
+
+### custom by raw link
+![](./banner1.png)
+
 ---
 
 ## 📁 Project Structure
