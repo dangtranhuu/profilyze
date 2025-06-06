@@ -105,18 +105,27 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Form Section */}
           <div className="space-y-4">
-            {["name", "role"].map((field) => (
-              <div key={field}>
-                <label className="block font-semibold mb-1 capitalize">{field}</label>
-                <input
-                  type="text"
-                  name={field}
-                  value={(form as any)[field]}
-                  onChange={handleChange}
-                  className="w-full border rounded px-3 py-2"
-                />
-              </div>
-            ))}
+            <div>
+              <label className="block font-semibold mb-1">Name</label>
+              <input
+                type="text"
+                name="name"
+                value={form.name}
+                onChange={handleChange}
+                className="w-full border rounded px-3 py-2"
+              />
+            </div>
+
+            <div>
+              <label className="block font-semibold mb-1">Role</label>
+              <input
+                type="text"
+                name="role"
+                value={form.role}
+                onChange={handleChange}
+                className="w-full border rounded px-3 py-2"
+              />
+            </div>
 
             <div>
               <label className="block font-semibold mb-1">Background</label>
